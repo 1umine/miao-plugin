@@ -59,14 +59,14 @@ const CharImg = {
   getRandomImg (imgPaths, defImgs = []) {
     for (let imgPath of imgPaths) {
       let ret = []
-      for (let type of ['webp', 'png']) {
+      for (let type of ['webp', 'png', 'jpg', 'jpeg']) {
         if (fs.existsSync(`${rPath}/${imgPath}.${type}`)) {
           ret.push(imgPath + `.${type}`)
         }
       }
       if (fs.existsSync(`${rPath}/${imgPath}`)) {
         let imgs = fs.readdirSync(`${rPath}/${imgPath}`).filter((file) => {
-          return /\.(png|webp)$/.test(file)
+          return /\.(png|webp|jpe?g)$/.test(file)
         })
         for (let img of imgs) {
           ret.push(`${imgPath}/${encodeURIComponent(img)}`)
