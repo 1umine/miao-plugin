@@ -5,7 +5,7 @@ import ProfileStat from './profile/ProfileStat.js'
 import ProfileList from './profile/ProfileList.js'
 import { uploadCharacterImg, delProfileImg, profileImgList } from './character/ImgUpload.js'
 import { enemyLv } from './profile/ProfileUtils.js'
-import { groupRank, resetRank, refreshRank, manageRank } from './profile/ProfileRank.js'
+import { groupRank, resetRank, refreshRank, manageRank, setDefDmgIdx } from './profile/ProfileRank.js'
 import { App, Cfg } from '#miao'
 
 let app = App.init({
@@ -61,6 +61,12 @@ app.reg({
     name: '面板排名榜',
     fn: groupRank,
     rule: /^#(星铁|原神)?(群|群内)?.+(排名|排行)(榜)?$/
+  },
+
+  setDefDmgIdx: {
+    name: '设置角色默认伤害索引',
+    fn: setDefDmgIdx,
+    rule: /^#喵喵设置(?:星铁|原神)?\S+?(?:默认)?伤害索引\s*\d+$/
   },
 
   artisList: {

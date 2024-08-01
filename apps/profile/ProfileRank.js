@@ -296,3 +296,26 @@ async function renderCharRankList ({ e, uids, char, mode, groupId }) {
     pageGotoParams: { waitUntil: 'networkidle2' }
   }, { e, scale: 1.4, retType: 'base64' }), new Button(e).profile(char)])
 }
+
+/**
+ * 设置自定义角色默认伤害索引
+ */
+export async function setDefDmgIdx(e) {
+  if (!e.group_id) {
+    return true
+  }
+  if (!e.isMaster && !this.e.member?.is_admin) {
+    e.reply('只有主人可设置默认伤害索引哦')
+    return true
+  }
+  let msg = e.msg.replace(/(#*喵喵设置|默认|伤害索引|星铁|原神)/g, '')
+  let game = e.isSr ? 'sr' : 'gs'
+  let [_, name, idx] = /(.+?) *([1-9]\d?\s*$)/.exec(msg) || []
+  let char = Character.get(name.trim(), game)
+  if (!char || !idx) {
+    e.reply("没有角色信息或未提供索引")
+    return true
+  }
+  await ProfileDmg.setCustomDefaultDmgIdx(char.id, idx, game)
+  e.reply(`已设置${char.name}默认伤害索引 ${idx}`)
+}

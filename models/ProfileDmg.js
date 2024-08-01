@@ -20,6 +20,25 @@ export default class ProfileDmg extends Base {
     }
   }
 
+  /**
+   * 获取自定义的角色默认伤害索引
+   * @param {number | string} charId 
+   */
+  async getCustomDefaultDmgIdx(charId) {
+    let r = lodash.toNumber(await redis.get(`miao:defdmgidx:${this.game}:${charId}`))
+    return lodash.isInteger(r) ? r : null
+  }
+
+  /**
+   * 设置自定义的角色默认伤害索引
+   * @param {number | string} charId 
+   * @param {number} idx
+   * @param {string} game `gs`（默认） | `sr` | 待补充
+   */
+  static async setCustomDefaultDmgIdx(charId, idx, game = 'gs') {
+    await redis.set(`miao:defdmgidx:${game}:${charId}`, idx)
+  }
+
   static dmgRulePath (name, game = 'gs') {
     let dmgFile = [
       { file: 'calc_user', name: '自定义伤害' },
@@ -136,6 +155,9 @@ export default class ProfileDmg extends Base {
     }
 
     let { id, weapon, attr, artis } = profile
+
+    let customDefDmgIdx = await this.getCustomDefaultDmgIdx(id)
+    defDmgIdx = lodash.isNull(customDefDmgIdx) ? defDmgIdx : customDefDmgIdx
 
     defDmgKey = lodash.isFunction(defDmgKey) ? defDmgKey(meta) : defDmgKey
     defDmgIdx = lodash.isFunction(defDmgIdx) ? defDmgIdx(meta) : defDmgIdx
