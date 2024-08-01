@@ -25,8 +25,8 @@ export default class ProfileDmg extends Base {
    * @param {number | string} charId 
    */
   async getCustomDefaultDmgIdx(charId) {
-    let r = lodash.toNumber(await redis.get(`miao:defdmgidx:${this.game}:${charId}`))
-    return lodash.isInteger(r) ? r : null
+    let r = await redis.get(`miao:defdmgidx:${this.game}:${charId}`)
+    return !lodash.isNil(r) ? lodash.toInteger(r) : null
   }
 
   /**
