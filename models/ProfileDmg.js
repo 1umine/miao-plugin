@@ -116,12 +116,16 @@ export default class ProfileDmg extends Base {
       // 文件中定义了createBy的话，优先进行展示
       let createdBy = cfg.createdBy || cfgPath.createdBy || '喵喵'
       createdBy = createdBy.slice(0, 15)
+
+      let customDefDmgIdx = await this.getCustomDefaultDmgIdx(this.char?.id)
+      let defDmgIdx = lodash.isNull(customDefDmgIdx) ? cfg.defDmgIdx : customDefDmgIdx
+
       return {
         createdBy,
         details: cfg.details || false, // 计算详情
         buffs: cfg.buffs || [], // 角色buff
         defParams: cfg.defParams || {}, // 默认参数，一般为空
-        defDmgIdx: cfg.defDmgIdx || -1, // 默认详情index
+        defDmgIdx: defDmgIdx || -1, // 默认详情index
         defDmgKey: cfg.defDmgKey || '',
         mainAttr: cfg.mainAttr || 'atk,cpct,cdmg', // 伤害属性
         enemyName: cfg.enemyName || this.isGs ? '小宝' : '弱点敌人' // 敌人名称
@@ -155,9 +159,6 @@ export default class ProfileDmg extends Base {
     }
 
     let { id, weapon, attr, artis } = profile
-
-    let customDefDmgIdx = await this.getCustomDefaultDmgIdx(id)
-    defDmgIdx = lodash.isNull(customDefDmgIdx) ? defDmgIdx : customDefDmgIdx
 
     defDmgKey = lodash.isFunction(defDmgKey) ? defDmgKey(meta) : defDmgKey
     defDmgIdx = lodash.isFunction(defDmgIdx) ? defDmgIdx(meta) : defDmgIdx
