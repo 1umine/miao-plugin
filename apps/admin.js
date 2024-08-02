@@ -150,13 +150,13 @@ async function updateMiaoPlugin (e) {
   let isForce = e.msg.includes('强制')
   let command = 'git  pull'
   if (isForce) {
-    command = 'git  checkout . && git  pull'
+    command = 'git fetch --all && git reset --hard origin/master && git pull'
     e.reply('正在执行强制更新操作，请稍等')
   } else {
     e.reply('正在执行更新操作，请稍等')
   }
-  exec(command, { cwd: miaoPath }, function (error, stdout, stderr) {
-    if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) {
+  exec(command, { cwd: miaoPath, windowsHide: true }, function (error, stdout, stderr) {
+    if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout) && !isForce) {
       e.reply('目前已经是最新版喵喵了~')
       return true
     }
@@ -164,28 +164,16 @@ async function updateMiaoPlugin (e) {
       e.reply('喵喵更新失败！\nError code: ' + error.code + '\n' + error.stack + '\n 请稍后重试。')
       return true
     }
-    e.reply('喵喵更新成功，正在尝试重新启动Yunzai以应用更新...')
+    e.reply(`喵喵${isForce ? "强制" : ""}更新成功，正在尝试重新启动Yunzai以应用更新...`)
     timer && clearTimeout(timer)
     Data.setCacheJSON('miao:restart-msg', {
       msg: '重启成功，新版喵喵已经生效',
       qq: e.user_id
     }, 30)
     timer = setTimeout(function () {
-      let command = 'npm run start'
-      if (process.argv[1].includes('pm2')) {
-        command = 'npm run restart'
-      }
-      exec(command, function (error, stdout, stderr) {
-        if (error) {
-          e.reply('自动重启失败，请手动重启以应用新版喵喵。\nError code: ' + error.code + '\n' + error.stack + '\n')
-          Bot.logger.error(`重启失败\n${error.stack}`)
-          return true
-        } else if (stdout) {
-          Bot.logger.mark('重启成功，运行已转为后台，查看日志请用命令：npm run log')
-          Bot.logger.mark('停止后台运行命令：npm stop')
-          process.exit()
-        }
-      })
+      // 需要以 node app 方式启动，依赖 spawnSync
+      console.log("=================\nReady exit for restart\n=================")
+      process.exit()
     }, 1000)
   })
   return true

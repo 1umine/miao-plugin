@@ -13,7 +13,8 @@ if (common && common.default && common.default.relpyPrivate) {
 const Index = {
   async init () {
     await Index.checkVersion()
-    await Index.startMsg()
+    // 尽量等待机器人上线，否则如使用 trss 可能会在连接到协议端之前发送消息导致失败
+    setTimeout(async () => await Index.startMsg(), 5000)
     Index.transUserData()
   },
 
