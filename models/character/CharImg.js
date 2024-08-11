@@ -57,8 +57,8 @@ const CharImg = {
   },
 
   getRandomImg (imgPaths, defImgs = []) {
+    let ret = []
     for (let imgPath of imgPaths) {
-      let ret = []
       for (let type of ['webp', 'png', 'jpg', 'jpeg']) {
         if (fs.existsSync(`${rPath}/${imgPath}.${type}`)) {
           ret.push(imgPath + `.${type}`)
@@ -72,9 +72,9 @@ const CharImg = {
           ret.push(`${imgPath}/${encodeURIComponent(img)}`)
         }
       }
-      if (ret.length > 0) {
-        return lodash.sample(ret)
-      }
+    }
+    if (ret.length > 0) { // 如果是选面板图时有彩蛋图同时也给普通图机会
+      return lodash.sample(ret)
     }
     for (let defImg of defImgs) {
       if (fs.existsSync(`${rPath}/${defImg}`)) {
