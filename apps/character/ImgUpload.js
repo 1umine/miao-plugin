@@ -1,6 +1,4 @@
 import fs from 'node:fs'
-import { promisify } from 'util'
-import { pipeline } from 'stream'
 import MD5 from 'md5'
 import fetch from 'node-fetch'
 import lodash from 'lodash'
@@ -105,24 +103,18 @@ async function saveImages (e, name, imageMessages) {
       continue
     }
     urlMap[val.url] = true
+    /** @type {Response} */
     const response = await fetch(val.url)
     if (!response.ok) {
       e.reply('图片下载失败。')
       return true
     }
-    if (response.headers.get('size') > 1024 * 1024 * imgMaxSize) {
+    const blob = await response.blob()
+    if (blob.size > 1024 * 1024 * imgMaxSize) {
       e.reply([segment.at(e.user_id, senderName), '添加失败：图片太大了。'])
       return true
     }
-    let fileName = ''
-    let fileType = 'png'
-    if (val.file) {
-      fileName = val.file.substring(0, val.file.lastIndexOf('.'))
-      fileType = val.file.substring(val.file.lastIndexOf('.') + 1)
-    }
-    if (response.headers.get('content-type') === 'image/gif') {
-      fileType = 'gif'
-    }
+    let fileType = blob.type.substring(6)
 
     if (isProfile) {
       // 面板图默认webp
@@ -132,24 +124,20 @@ async function saveImages (e, name, imageMessages) {
       fileType = 'jpg'
     }
 
-    let imgPath = `${path}/${fileName}.${fileType}`
-    const streamPipeline = promisify(pipeline)
-    await streamPipeline(response.body, fs.createWriteStream(imgPath))
-
     // 使用md5作为文件名
-    let buffers = fs.readFileSync(imgPath)
-    let base64 = Buffer.from(buffers, 'base64').toString()
-    let md5 = MD5(base64)
-    let newImgPath = `${path}/${md5}.${fileType}`
-    if (fs.existsSync(newImgPath)) {
-      fs.unlink(newImgPath, (err) => {
-        console.log('unlink', err)
-      })
-    }
-    fs.rename(imgPath, newImgPath, () => {
-    })
+    let buffer = Buffer.from(await blob.arrayBuffer())
+    let md5 = MD5(buffer)
+    let imgPath = `${path}/${md5}.${fileType}`
+    const stream = fs.createWriteStream(imgPath)
+    stream.write(buffer)
+    stream.end()
+
     imgCount++
-    Bot.logger.mark(`添加成功: ${newImgPath}`)
+    try {
+      Bot.logger.mark(`添加成功: ${imgPath}`)
+    } catch (e) {
+      Bot.makeLog("info", `miao 添加角色图片成功: ${imgPath}`) // trss
+    }
   }
   e.reply([segment.at(e.user_id, senderName), `\n成功添加${imgCount}张${name}${isProfile ? '面板图' : '图片'}。`])
   return true
