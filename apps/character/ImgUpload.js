@@ -1,4 +1,5 @@
 import fs from 'node:fs'
+import asyncfs from 'node:fs/promises'
 import MD5 from 'md5'
 import fetch from 'node-fetch'
 import lodash from 'lodash'
@@ -128,9 +129,7 @@ async function saveImages (e, name, imageMessages) {
     let buffer = Buffer.from(await blob.arrayBuffer())
     let md5 = MD5(buffer)
     let imgPath = `${path}/${md5}.${fileType}`
-    const stream = fs.createWriteStream(imgPath)
-    stream.write(buffer)
-    stream.end()
+    await asyncfs.writeFile(imgPath, buffer)
 
     imgCount++
     try {
