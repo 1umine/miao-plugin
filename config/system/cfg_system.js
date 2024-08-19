@@ -162,6 +162,12 @@ export const cfgSchema = {
         key: '小清新',
         def: false,
         desc: '启用后会启用角色图及增量包中的小清新图像，勇士啊，你准备好了吗'
+      },
+      extraPic: {
+        title: '喵喵角色图像加量包',
+        key: '加量图',
+        def: true,
+        desc: '启用图像加量包（若有），默认启用'
       }
     }
   },

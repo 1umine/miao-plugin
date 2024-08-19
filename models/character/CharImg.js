@@ -5,6 +5,7 @@ import fs from 'node:fs'
 import lodash from 'lodash'
 import sizeOf from 'image-size'
 import { miaoPath } from '#miao.path'
+import { Cfg } from '#miao'
 
 const rPath = `${miaoPath}/resources`
 const CharImg = {
@@ -31,12 +32,13 @@ const CharImg = {
     if (!lodash.isArray(names)) {
       names = [names]
     }
+    let useResPlus = Cfg.get('extraPic', true)
     for (let name of names) {
       addImg(`character-img/${name}`)
       addImg(`character-img/${name}/upload`)
       addImg(`character-img/${name}/se`, !se)
       const plusPath = './plugins/miao-plugin/resources/miao-res-plus/'
-      if (fs.existsSync(plusPath)) {
+      if (useResPlus && fs.existsSync(plusPath)) {
         addImg(`miao-res-plus/character-img/${name}`)
         addImg(`miao-res-plus/character-img/${name}/se`, !se)
       }
