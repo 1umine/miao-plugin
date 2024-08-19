@@ -107,6 +107,12 @@ export const cfgSchema = {
         def: true,
         desc: '开启彩蛋图（三皇冠/ACE/满命）及自定义面板图，关闭使用官方立绘'
       },
+      specialSplash: {
+        title: '使用彩蛋图',
+        key: '彩蛋图',
+        def: true,
+        desc: '是否使用彩蛋图，需要先开启自定义面板图，默认开启'
+      },
       teamCalc: {
         title: '组队加成伤害',
         key: '组队',

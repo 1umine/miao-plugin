@@ -108,7 +108,7 @@ const ProfileAvatar = {
           break
       }
     }
-    if (isSuper) {
+    if (isSuper && Cfg.get('specialSplash', true)) {
       return CharImg.getRandomImg(
         [`profile/super-character/${name}`, `profile/normal-character/${name}`],
         [`${nPath}/imgs/splash0.webp`, `${nPath}/imgs/splash${costume}.webp`, `/${nPath}/imgs/splash.webp`]
