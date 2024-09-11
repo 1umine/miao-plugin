@@ -22,6 +22,11 @@ app.reg({
     fn: updateRes,
     desc: '【#管理】更新素材'
   },
+  updateResSource: {
+    rule: /^#喵喵切换图源.+$/,
+    fn: updateResSource,
+    desc: '【#管理】切换加量图源'
+  },
   update: {
     rule: /^#喵喵(强制)?更新$/,
     fn: updateMiaoPlugin,
@@ -139,6 +144,25 @@ async function updateRes (e) {
     })
   }
   return true
+}
+
+async function updateResSource(e) {
+  if (!await checkAuth(e)) {
+    return true
+  }
+  let sourceUrl = e.msg.replace('#喵喵切换图源', '').trim()
+  if (!sourceUrl) {
+    e.reply('请指定加量图源 git 链接')
+    return
+  }
+  let command = `git remote set-url origin ${sourceUrl}`
+  exec(command, { cwd: `${resPath}/miao-res-plus/`, windowsHide: true }, function (error, stdout, stderr) {
+    if (error) {
+      e.reply('切换图源失败！\nError code: ' + error.code + '\n' + error.stack + '\n 请稍后重试。')
+    } else {
+      e.reply('图源切换成功~ 当前图源为：' + sourceUrl)
+    }
+  })
 }
 
 let timer
