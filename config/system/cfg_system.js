@@ -111,7 +111,13 @@ export const cfgSchema = {
         title: '使用彩蛋图',
         key: '彩蛋图',
         def: true,
-        desc: '是否使用彩蛋图，需要先开启自定义面板图，默认开启'
+        desc: '是否使用彩蛋图（同时也会使用普通图），需要先开启自定义面板图，默认开启'
+      },
+      onlySpecialSplash: {
+        title: '满足条件时只使用彩蛋图',
+        key: '仅彩蛋图',
+        def: false,
+        desc: '是否仅使用彩蛋图，默认情况会同时使用普通图和彩蛋图，开启后满足条件则仅使用彩蛋图'
       },
       teamCalc: {
         title: '组队加成伤害',

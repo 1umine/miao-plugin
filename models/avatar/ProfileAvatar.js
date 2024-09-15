@@ -108,7 +108,8 @@ const ProfileAvatar = {
           break
       }
     }
-    if (isSuper && Cfg.get('specialSplash', true)) {
+    if (isSuper && Cfg.get('specialSplash', true) && !Cfg.get('onlySpecialSplash', false)) {
+      // 满足彩蛋图条件 且 开启使用彩蛋图 并且 没开启仅使用彩蛋图，默认 false
       return CharImg.getRandomImg(
         [`profile/super-character/${name}`, `profile/normal-character/${name}`],
         [`${nPath}/imgs/splash0.webp`, `${nPath}/imgs/splash${costume}.webp`, `/${nPath}/imgs/splash.webp`]
