@@ -113,7 +113,8 @@ const ProfileAvatar = {
       if (Cfg.get('onlySpecialSplash', false)) {
         return CharImg.getRandomImg(
           [`profile/super-character/${name}`],
-          [`${nPath}/imgs/splash0.webp`, `${nPath}/imgs/splash${costume}.webp`, `/${nPath}/imgs/splash.webp`]
+          [`${nPath}/imgs/splash0.webp`, `${nPath}/imgs/splash${costume}.webp`, `/${nPath}/imgs/splash.webp`],
+          [`profile/normal-character/${name}`]
         )
       }
       return CharImg.getRandomImg(
