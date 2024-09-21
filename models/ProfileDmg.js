@@ -188,8 +188,8 @@ export default class ProfileDmg extends Base {
 
     lodash.forEach(details, (detail, detailSysIdx) => {
       if (mode === 'single') {
-        if (defDmgKey) {
-          if (detail.dmgKey !== defDmgKey) {
+        if (defDmgIdx < 0 && defDmgKey) { // 未指定 defDmgIdx，且有 defDmgKey
+          if (detail.dmgKey !== defDmgKey) { // 非本次指定，跳过
             return true
           }
         } else if (detailSysIdx !== dmgIdx) {

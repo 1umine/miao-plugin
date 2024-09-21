@@ -231,7 +231,7 @@ export default class Player extends Base {
         return false
       }
     }
-
+    /** @type {Avatar} */
     let avatar = avatars[id]
     if (!avatar.isAvatar) {
       let data = avatars[id]
