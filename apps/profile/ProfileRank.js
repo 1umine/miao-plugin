@@ -310,7 +310,7 @@ export async function setDefDmgIdx(e) {
   }
   let msg = e.msg.replace(/(#*喵喵设置|默认|伤害索引|星铁|原神)/g, '')
   let game = e.isSr ? 'sr' : 'gs'
-  let [_, name, idx] = /(.+?) *([1-9]\d?\s*$)/.exec(msg) || []
+  let [_, name, idx] = /(.+?) *([1-9]?\d\s*$)/.exec(msg) || []
   let char = Character.get(name.trim(), game)
   if (!char || !idx) {
     e.reply("没有角色信息或未提供索引")
