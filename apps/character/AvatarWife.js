@@ -151,7 +151,7 @@ const Wife = {
         if (lodash.intersection(['全部', '任意', '随机', '全都要'], wifeList).length > 0) {
           addRet = ['随机']
         } else {
-          wifeList = lodash.map(wifeList, (name) => {
+          wifeList = e.isMaster ? wifeList : lodash.map(wifeList, (name) => {
             let char = Character.get(name)
             if (char && char.checkWifeType(targetCfg.type)) {
               return char.name
