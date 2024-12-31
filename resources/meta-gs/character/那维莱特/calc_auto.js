@@ -33,6 +33,14 @@ export const details = [{
     const a2Multi = cons >= 1 ? 1.6 : 1.25
     return basic(a2Multi * td * calc(attr.hp) / 100, 'a2')
   }
+}, {
+  title: '那芙万希·重击伤害',
+  params: { team: true, xi: true },
+  dmg: ({ talent, attr, calc, cons }, { basic }) => {
+    const td = talent.a['重击·衡平推裁持续伤害']
+    const a2Multi = cons >= 1 ? 1.6 : 1.25
+    return basic(a2Multi * td * calc(attr.hp) / 100, 'a2')
+  }
 }]
 
 export const defDmgIdx = 5
@@ -104,6 +112,16 @@ export const buffs = [{
     a3Dmg: 32,
     dmg: 48,
     kx: 40
+  }
+}, {
+  check: ({ params }) => (params.team === true && params.xi === true),
+  title: '精一岩峰巡歌0命希诺宁：获得[dmg]%增伤(武器25.6，圣遗物40)，减抗[kx]%',
+  data: {
+    aDmg: 32,
+    a2Dmg: 32,
+    a3Dmg: 32,
+    dmg: 25.6+40,
+    kx: 36
   }
 }]
 
