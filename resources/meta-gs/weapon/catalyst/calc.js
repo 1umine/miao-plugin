@@ -97,8 +97,7 @@ export default function (step, staticStep) {
       title: '护盾+满层情况下攻击力提高[atkPct]%',
       buffCount: 10,
       refine: {
-        atkPct: step(4),
-        shield: step(20)
+        atkPct: step(4)
       }
     }],
     不灭月华: [staticStep('heal', 10, 2.5), {
@@ -195,9 +194,9 @@ export default function (step, staticStep) {
       }
     }],
     冲浪时光: [staticStep('hpPct', 20), {
-      title: '施放元素战技后，普通攻击造成的伤害提升[dmg]%',
+      title: '施放元素战技后，普通攻击造成的伤害提升[aDmg]%',
       refine: {
-        dmg: step(12 * 4)
+        aDmg: step(12 * 4)
       }
     }],
     木棉之环: {

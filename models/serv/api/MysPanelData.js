@@ -1,24 +1,26 @@
-import { Meta } from '#miao'
+import { Format, Meta } from '#miao'
 import { Character, Artifact, Weapon } from '#miao.models'
 import { artifactMainIdMapping, propertyType2attrName, fixedAttrNames } from './MysPanelMappings.js'
 import lodash from 'lodash'
 
 let MysPanelData = {
   setAvatar (player, ds) {
-    let char = Character.get(ds.base.id)
-    let avatar = player.getAvatar(ds.base.id, true)
+    let { id, element, level, fetter, actived_constellation_num } = ds.base
+    let elem = Format.elem(element)
+    let char = Character.get({ id, elem })
+    let avatar = player.getAvatar(id, true)
     if (!char) {
       return false
     }
 
     avatar.setAvatar({
-      level: ds.base.level,
-      cons: ds.base.actived_constellation_num,
-      fetter: ds.base.fetter,
-      // ds.costumes 是个数组，暂时不知道怎么用
-      elem: ds.base.elem,
+      level,
+      elem,
+      fetter,
+      cons: actived_constellation_num,
+      costume: ds.costumes?.[0]?.id || 0,
       weapon: MysPanelData.getWeapon(ds.weapon),
-      talent: MysPanelData.getTalent(char, ds.skills),
+      talent: MysPanelData.getTalent(char, actived_constellation_num, ds.skills),
       artis: MysPanelData.getArtifact(ds.relics)
     }, 'mysPanel')
     return avatar
@@ -34,29 +36,29 @@ let MysPanelData = {
     }
   },
 
-  getTalent (char, ds = {}) {
-    // 照抄 EnkaData 实现
-    let { talentId = {}, talentElem = {} } = char.meta
-    let elem = ''
+  getTalent(char, cons, ds = []) {
+    let { talentId = {}, talentCons = {} } = char.meta
     let idx = 0
     let ret = {}
     lodash.forEach(ds, (talent_data) => {
-      const id = talent_data.skill_id
-      const lv = talent_data.level
       let key
-      if (talentId[id]) {
-        let key = talentId[id]
-        elem = elem || talentElem[id]
-        ret[key] = lv
+      if (talentId[talent_data.skill_id]) {
+        let key = talentId[talent_data.skill_id]
+        ret[key] = talent_data.level
       } else if (talent_data.skill_type == 1) { // 1 主动技能；2 被动技能
         key = ['a', 'e', 'q'][idx++]
-        ret[key] = ret[key] || lv
+        ret[key] = ret[key] || talent_data.level
       }
     })
-    return {
-      elem: elem,
-      talent: ret
+    // 减去命座加成
+    if (cons >= 3) {
+      lodash.forEach(talentCons, (lv, key) => {
+        if (lv != 0 && ret[key] && cons >= lv) {
+          ret[key] = Math.max(1, ret[key] - 3)
+        }
+      })
     }
+    return ret
   },
 
   getArtifact (data) {
