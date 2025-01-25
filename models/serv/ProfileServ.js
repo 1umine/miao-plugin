@@ -16,8 +16,9 @@ export default class ProfileServ extends Base {
   }
 
   get name () {
+    /** @type {string} */
     let url = this.getCfg('url')
-    return this._name || url.replace('https://', '').replace('/', '').trim()
+    return this._name || url.replace(/https?:\/\//, '').replace('/', '').trim()
   }
 
   // 获取当前面板服务配置

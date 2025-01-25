@@ -7,6 +7,7 @@
 /config.js
 *.css.map
 /resources/character-img/*/upload/
+/resources/character-img/*/se/
 /resources/help/help-list.js
 /resources/help/help-cfg.js
 /resources/help/theme/*
