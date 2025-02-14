@@ -33,7 +33,7 @@ const relationMap = {
 
 const relation = lodash.flatMap(relationMap, (d) => d.keyword)
 // 老婆命令必须以#开头，防止误触
-const wifeReg = `^#\\s*(${relation.join('|')})\\s*(设置|选择|指定|添加|列表|查询|列表|是|是谁|照片|相片|图片|写真|图像)?\\s*([^\\d]*)\\s*(\\d*)$`
+const wifeReg = `^#\\s*(${relation.join('|')})\\s*(设置|选择|指定|添加|删除|列表|查询|列表|是|是谁|照片|相片|图片|写真|图像)?\\s*([^\\d]*)\\s*(\\d*)$`
 
 async function getAvatarList (player, type) {
   await player.refreshMysDetail()
@@ -79,7 +79,7 @@ const Wife = {
     let action = msgRet[2] || '卡片'
     let actionParam = msgRet[3] || ''
 
-    if (!'设置,选择,挑选,指定,添加'.split(',').includes(action) && actionParam) {
+    if (!'设置,选择,挑选,指定,添加,删除'.split(',').includes(action) && actionParam) {
       return false
     }
 
@@ -168,6 +168,23 @@ const Wife = {
         }
         await selfUser.setCfg(`wife.${targetCfg.key}`, addRet)
         e.reply(`${targetCfg.keyword[0]}已经设置：${addRet.join('，')}`)
+        return true
+      case '删除':
+        if (!isSelf) {
+          e.reply('只能删除自己的哦~')
+          return true
+        }
+        actionParam = actionParam.replace(/(，|、|;|；)/g, ',')
+        let delList = actionParam.split(',')
+        let wifes = await selfUser.getCfg(`wife.${targetCfg.key}`, [])
+        let r = wifes.filter((name) => !delList.includes(name))
+        if (r.length === 0) r = null
+        
+        await selfUser.setCfg(`wife.${targetCfg.key}`, r)
+        if (!r)
+          e.reply(`已经失去所有${targetCfg.keyword[0]}了哦~`)
+        else
+          e.reply(`${targetCfg.keyword[0]}已经设置：${r.join('，')}`)
         return true
       case '列表':
       case '是':
