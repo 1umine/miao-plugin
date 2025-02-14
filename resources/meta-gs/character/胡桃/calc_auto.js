@@ -58,4 +58,10 @@ export const buffs = [{
   data: {
     kx: 20
   }
+}, {
+  check: ({ cons }) => cons >= 6,
+  title: '胡桃满命：提升 100% 暴击率，按三轮期望计 [cpct]%',
+  data: {
+    cpct: ({attr}) => {(100-attr.cpct) / 3}
+  }
 }, 'vaporize']
