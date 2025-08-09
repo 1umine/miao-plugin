@@ -15,6 +15,10 @@ export const details = [{
   params: { Lunar: true },
   dmg: ({ calc, attr }, { basic }) => basic(calc(attr.atk) * 65 / 100, '', 'lunarCharged')
 }, {
+  title: '单人月感电伤害',
+  params: { Lunar: true },
+  dmg: ({}, { reaction }) => reaction('lunarCharged')
+}, {
   check: ({ cons }) => cons >= 2,
   title: `单人2命附加伤害`,
   params: { Lunar: true },
@@ -24,31 +28,32 @@ export const details = [{
   title: `单人6命附加伤害`,
   params: { Lunar: true },
   dmg: ({ calc, attr }, { basic }) => basic(calc(attr.atk) * 135 / 100, '', 'lunarCharged')
-}, {
-  title: '单人月感电伤害',
-  params: { Lunar: true },
-  dmg: ({}, { reaction }) => reaction('lunarCharged')
 }]
 
-export const defDmgIdx = 2
+export const defDmgIdx = 4
 export const mainAttr = 'atk,cpct,cdmg,mastery'
 
 export const buffs = [{
   title: '伊涅芙天赋：施放元素爆发后元素精通提升[mastery]',
+  sort: 9,
   data: {
     mastery: ({ attr, calc }) => calc(attr.atk) * 6 / 100
   }
 }, {
   check: ({ params }) => params.Lunar === true,
   title: '伊涅芙天赋：触发感电反应时转为触发月感电反应,基础伤害提升[fypct]%',
+  sort: 9,
   data: {
     fypct: ({ attr, calc }) => Math.min((calc(attr.atk) / 100 * 0.7), 14)
   }
 }, {
   check: ({ params }) => params.Lunar === true,
   title: '伊涅芙1命：展开护盾时月感电反应伤害提升[lunarCharged]%',
+  sort: 9,
   cons: 1,
   data: {
     lunarCharged: ({ attr, calc }) => Math.min((calc(attr.atk) / 100 * 2.5), 50)
   }
 }]
+
+export const createdBy = 'liangshi'
