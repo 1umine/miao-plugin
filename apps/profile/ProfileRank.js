@@ -238,7 +238,8 @@ async function renderCharRankList ({ e, uids, char, mode, groupId }) {
         tmp._mark = mark?._mark || 0
       }
       tmp._formatmark = Format.comma(tmp._mark, 1)
-      tmp._dmg = lodash.toNumber((tmp.dmg?.avg || '').replace(/,/g, '')) || 0
+      let rank = tmp?.dmg?.rank
+      tmp._dmg = lodash.isFinite(rank) ? -rank : -Infinity
       tmp._star = 5 - tmp.star
       list.push(tmp)
     }
