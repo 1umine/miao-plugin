@@ -179,9 +179,9 @@ const ProfileChange = {
         txt = txt.replace(talentRet[0], '')
       }
 
-      let lvRet = /等级(?:^|[^0-9])(100|95|[1-9]|[1-8][0-9]|90)(?![0-9])|(?:^|[^0-9])(100|95|[1-9]|[1-8][0-9]|90)(?![0-9])级/.exec(txt)
+      let lvRet = /等级([1-9]\d{0,2})|([1-9]\d{0,2})级/.exec(txt)
       if (lvRet && (lvRet[1] || lvRet[2])) {
-        char.level = (lvRet[1] || lvRet[2]) * 1
+        char.level = parseInt(Math.min(100, (lvRet[1] || lvRet[2]) * 1))
         txt = txt.replace(lvRet[0], '')
       }
       txt = lodash.trim(txt)
