@@ -257,10 +257,10 @@ export default function (step, staticStep) {
       }
     },
     真语秘匣: [staticStep('cpct', 8), {
-      title: '施放元素战技时元素精通提升[mastery]%, 暴击伤害提升[cdmg]%',
+      title: '施放元素战技时元素精通提升[mastery], 暴击伤害提升[cdmg]%',
       data: {
         mastery: ({ params, refine }) => ((params.Moonsign || 0) >= 1 ? 1.5 : 1) * step(80)[refine],
-        cdmg: ({ params, refine }) => ((params.Moonsign || 0) >= 1 ? 1.5 : 1) * step(24)[refine]
+        cdmg: ({ params, refine }) => ((params.Moonsign || 0) >= 1 ? 1.5 : 0) * step(24)[refine]
       }
     }]
   }
