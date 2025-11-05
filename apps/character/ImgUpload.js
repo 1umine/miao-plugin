@@ -6,6 +6,7 @@ import lodash from 'lodash'
 import { Cfg, Data } from '#miao'
 import { Character } from '#miao.models'
 import { miaoPath } from '#miao.path'
+import cfg from '../../../../lib/config/config.js'
 
 const resPath = miaoPath + '/resources/'
 let regex = /^#?\s*(?:喵喵)?(?:上传|添加)(.+)(?:照片|写真|图片|图像)\s*$/
@@ -88,7 +89,8 @@ export async function uploadCharacterImg (e) {
 }
 
 async function saveImages (e, name, imageMessages) {
-  let imgMaxSize = e?.groupConfig?.imgMaxSize || 5
+  const groupConfig = cfg.getGroup(e.self_id, e.group_id)
+  let imgMaxSize = groupConfig?.imgMaxSize || 5
   let pathSuffix = `character-img/${name}/upload`
   if (isProfile) pathSuffix = `profile/normal-character/${name}`
   let path = resPath + pathSuffix
