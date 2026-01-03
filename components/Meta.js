@@ -138,7 +138,11 @@ const Meta = {
     meta.addAliasFn(fn)
   },
 
-  // 获取存储
+  /** 获取存储 
+   * @param {string} game 游戏标识
+   * @param {string} type 数据类型
+   * @return {MetaData} 存储实例
+  */
   create (game, type) {
     let key = `${game}.${type}`
     if (!MetaStore[key]) {
@@ -167,6 +171,34 @@ const Meta = {
       }
     }
     return false
+  },
+
+  getCharacterAliases(characterName, game = "gs") {
+    const meta = Meta.create(game, "char")
+    const charId = meta.getId(characterName)
+
+    if (!charId) {
+      return null
+    }
+
+    const allAliases = meta.alias
+    return Object.keys(allAliases).filter(
+      (alias) => allAliases[alias] === charId
+    )
+  },
+
+  /** 添加角色别名
+   * @param {string} characterName
+   * @param {string} aliases 逗号分隔的别名
+    */
+  addCharacterAlias(characterName, aliases, game = "gs") {
+    const meta = Meta.create(game, "char")
+    const charId = meta.getId(characterName)
+
+    if (!charId) {
+      return null
+    }
+    meta.addAlias({ [charId]: aliases }, false)
   }
 }
 export default Meta
