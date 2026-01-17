@@ -108,6 +108,7 @@ export async function resetRank (e) {
   let charName = '全部角色'
   let char
   if (name) {
+    char = Character.get(name, game)
     if (!char) {
       e.reply(`重置排名失败，角色：${name}不存在`)
       return true
