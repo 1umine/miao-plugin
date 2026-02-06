@@ -41,7 +41,7 @@ export const usefulAttr = {
   诺艾尔: { hp: 0, atk: 50, def: 90, cpct: 100, cdmg: 100, mastery: 0, dmg: 100, phy: 0, recharge: 70, heal: 0 },
   旅行者: { hp: 0, atk: 75, def: 0, cpct: 100, cdmg: 100, mastery: 0, dmg: 100, phy: 0, recharge: 55, heal: 0 },
   重云: { hp: 0, atk: 75, def: 0, cpct: 100, cdmg: 100, mastery: 75, dmg: 100, phy: 0, recharge: 55, heal: 0 },
-  七七: { hp: 0, atk: 75, def: 0, cpct: 30, cdmg: 30, mastery: 0, dmg: 100, phy: 100, recharge: 55, heal: 100 },
+  七七: { hp: 0, atk: 80, def: 0, cpct: 75, cdmg: 75, mastery: 0, dmg: 100, phy: 100, recharge: 80, heal: 100 },
   凯亚: { hp: 0, atk: 75, def: 0, cpct: 100, cdmg: 100, mastery: 0, dmg: 100, phy: 100, recharge: 30, heal: 0 },
   烟绯: { hp: 0, atk: 75, def: 0, cpct: 100, cdmg: 100, mastery: 75, dmg: 100, phy: 0, recharge: 30, heal: 0 },
   早柚: { hp: 0, atk: 75, def: 0, cpct: 50, cdmg: 50, mastery: 100, dmg: 100, phy: 0, recharge: 55, heal: 100 },
