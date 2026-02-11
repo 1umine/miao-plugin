@@ -78,7 +78,7 @@ app.reg({
   profileStat: {
     name: '面板练度统计',
     fn: ProfileStat.stat,
-    rule: /^#(星铁|原神)?(面板|喵喵)?练度统计$/,
+    rule: /^#(星铁|原神)?(面板|喵喵)?练度统计\d?$/,
     yzRule: /^#*(我的)*(风|岩|雷|草|水|火|冰)*(武器|角色|练度|五|四|5|4|星)+(汇总|统计|列表)(force|五|四|5|4|星)*[ |0-9]*$/,
     yzCheck: () => Cfg.get('profileStat', false)
   },

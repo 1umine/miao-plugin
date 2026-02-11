@@ -376,7 +376,7 @@ export default class Player extends Base {
   /**
    * 刷新并获取角色数据
    *
-   * @param cfg
+   * @param {{detail: number, talent: number, index: number, materials: boolean, retType: string, rank: boolean, sort: boolean, sortType: number}} cfg
    * @param cfg.detail mys-detail数据更新级别，角色列表与详情
    * @param cfg.talent mys-talent数据更新级别，角色天赋数据
    * @param cfg.index mys-index数据更新级别，游戏统计数据
@@ -384,9 +384,9 @@ export default class Player extends Base {
    * @param cfg.retType 返回类型，默认id为key对象，设置为array时返回数组
    * @param cfg.rank 面板数据是否参与群排序
    * @param cfg.sort 返回为数组时，数据是否排序，排序规则：等级、星级、天赋、命座、武器、好感的顺序排序
+   * @param cfg.sortType 排序方式，2为按圣遗物分数排，默认0
    * @returns {Promise<any[]|{}>}
    */
-
   async refreshAndGetAvatarData (cfg) {
     await this.refresh(cfg)
 
@@ -411,6 +411,7 @@ export default class Player extends Base {
         ds.artisSet = avatar.artis.getSetData()
         let mark = avatar.getArtisMark(false)
         ds.artisMark = Data.getData(mark, 'mark,markClass,names')
+        ds.artisMark = parseFloat(ds.artisMark.mark) || 0
         if (rank) {
           rank.getRank(profile)
         }
@@ -425,6 +426,9 @@ export default class Player extends Base {
     avatarRet = lodash.values(avatarRet)
     if (cfg.sort) {
       let sortKey = 'level,star,aeq,cons,weapon.level,weapon.star,weapon.affix,fetter'.split(',')
+      if (cfg.sortType === 2) {
+        sortKey = ['artisMark.mark'].concat(sortKey)
+      }
       avatarRet = lodash.orderBy(avatarRet, sortKey)
       avatarRet = avatarRet.reverse()
     }

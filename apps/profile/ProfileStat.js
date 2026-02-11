@@ -556,6 +556,11 @@ const ProfileStat = {
   // 渲染
   // mode stat:练度统计 avatar:角色列表 talent:天赋统计
   async render (e, mode = 'stat', isRole = false) {
+    let sortType = 0
+    if (mode === 'stat' && !isRole) {
+      sortType = parseInt(e.msg.match(/.*练度统计(\d)?/)?.[1] || 0)
+      e.msg = e.msg.replace(/练度统计\d?/, '练度统计')
+    }
     let game = /星铁/.test(e.msg) ? 'sr' : 'gs'
     e.isSr = game === 'sr'
     e.game = game
@@ -585,7 +590,8 @@ const ProfileStat = {
       rank: true,
       materials: mode === 'talent',
       retType: 'array',
-      sort: true
+      sort: true,
+      sortType,
     })
 
     if (avatarRet.length === 0) {
