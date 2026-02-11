@@ -407,6 +407,7 @@ export default class Player extends Base {
       avatarRet[ds.id] = ds
 
       let profile = avatar.getProfile()
+      ds.artisMark = {mark: 0, markClass: 'UD', names: ['unknown']} // 默认值
       if (avatar.isProfile) {
         ds.artisSet = avatar.artis.getSetData()
         let mark = avatar.getArtisMark(false)
