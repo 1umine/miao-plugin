@@ -411,7 +411,7 @@ export default class Player extends Base {
         ds.artisSet = avatar.artis.getSetData()
         let mark = avatar.getArtisMark(false)
         ds.artisMark = Data.getData(mark, 'mark,markClass,names')
-        ds.artisMark = parseFloat(ds.artisMark.mark) || 0
+        ds.artisMark.mark = parseFloat(ds.artisMark.mark) || 0
         if (rank) {
           rank.getRank(profile)
         }
