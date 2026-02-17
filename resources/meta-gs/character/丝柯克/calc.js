@@ -15,6 +15,22 @@ export const details = [{
   params: { Havoc_Ruin: true },
   dmg: ({ talent, attr }, dmg) => dmg(talent.q['斩击伤害'] + talent.q['斩击最终段伤害'], 'q')
 }, {
+  title: '丝芙爱莫普攻尾段伤害',
+  params: { cons_2: true, team1: true },
+  dmg: ({ talent, attr }, dmg) => dmg(talent.e['五段伤害'], 'a')
+}, {
+  title: '丝芙爱莫Q六段总伤',
+  params: { Havoc_Ruin: true, team1: true },
+  dmg: ({ talent, attr }, dmg) => dmg(talent.q['斩击伤害'] + talent.q['斩击最终段伤害'], 'q')
+}, {
+  title: '丝芙茜夏普攻尾段伤害',
+  params: { cons_2: true, team2: true },
+  dmg: ({ talent, attr }, dmg) => dmg(talent.e['五段伤害'], 'a')
+}, {
+  title: '丝芙茜夏Q六段总伤',
+  params: { Havoc_Ruin: true, team2: true },
+  dmg: ({ talent, attr }, dmg) => dmg(talent.q['斩击伤害'] + talent.q['斩击最终段伤害'], 'q')
+}, {
   title: '七相一闪1命晶刃单次伤害',
   params: { cons_2 : true },
   cons: 1,
@@ -33,22 +49,6 @@ export const details = [{
   params: { cons_2 : true },
   cons: 6,
   dmg: ({}, dmg) => dmg(150 * 3, 'a2')
-}, {
-  title: '丝芙爱莫普攻尾段伤害',
-  params: { cons_2: true, team1: true },
-  dmg: ({ talent, attr }, dmg) => dmg(talent.e['五段伤害'], 'a')
-}, {
-  title: '丝芙爱莫Q六段总伤',
-  params: { Havoc_Ruin: true, team1: true },
-  dmg: ({ talent, attr }, dmg) => dmg(talent.q['斩击伤害'] + talent.q['斩击最终段伤害'], 'q')
-}, {
-  title: '丝芙茜夏普攻尾段伤害',
-  params: { cons_2: true, team2: true },
-  dmg: ({ talent, attr }, dmg) => dmg(talent.e['五段伤害'], 'a')
-}, {
-  title: '丝芙茜夏Q六段总伤',
-  params: { Havoc_Ruin: true, team2: true },
-  dmg: ({ talent, attr }, dmg) => dmg(talent.q['斩击伤害'] + talent.q['斩击最终段伤害'], 'q')
 }]
 
 export const defDmgIdx = 1
