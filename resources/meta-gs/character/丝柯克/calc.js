@@ -41,6 +41,14 @@ export const details = [{
   title: '丝芙爱莫Q六段总伤',
   params: { Havoc_Ruin: true, team1: true },
   dmg: ({ talent, attr }, dmg) => dmg(talent.q['斩击伤害'] + talent.q['斩击最终段伤害'], 'q')
+}, {
+  title: '丝芙茜夏普攻尾段伤害',
+  params: { cons_2: true, team2: true },
+  dmg: ({ talent, attr }, dmg) => dmg(talent.e['五段伤害'], 'a')
+}, {
+  title: '丝芙茜夏Q六段总伤',
+  params: { Havoc_Ruin: true, team2: true },
+  dmg: ({ talent, attr }, dmg) => dmg(talent.q['斩击伤害'] + talent.q['斩击最终段伤害'], 'q')
 }]
 
 export const defDmgIdx = 1
@@ -85,7 +93,7 @@ export const buffs = [{
     atkPct: 40
   }
 }, {
-  check: ({ params }) => params.team1 === true,
+  check: ({ params }) => params.team1 === true || params.team2 === true,
   title: '2命芙宁娜：元素爆发增伤[dmg]%',
   data: {
     dmg: 100
@@ -108,6 +116,18 @@ export const buffs = [{
   title: '0命爱可菲：减抗[kx]%',
   data: {
     kx: 55
+  }
+}, {
+  check: ({ params }) => params.team2 === true,
+  title: '讨龙宗室夏洛蒂：提升攻击力[atkPct]%',
+  data: {
+    atkPct: 48 + 20
+  }
+}, {
+  check: ({ params }) => params.team2 === true,
+  title: '茜特菈莉：勇者增伤[dmg]%',
+  data: {
+    dmg: 40
   }
 }]
 
