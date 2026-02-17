@@ -34,9 +34,9 @@ export const details = [{
   cons: 6,
   dmg: ({}, dmg) => dmg(150 * 3, 'a2')
 }, {
-  title: '丝芙爱莫普通尾段',
+  title: '丝芙爱莫普攻尾段伤害',
   params: { cons_2: true, team1: true },
-  dmg: ({ talent, attr }, dmg) => dmg(talent.a['五段伤害'], 'a')
+  dmg: ({ talent, attr }, dmg) => dmg(talent.e['五段伤害'], 'a')
 }, {
   title: '丝芙爱莫Q六段总伤',
   params: { Havoc_Ruin: true, team1: true },
