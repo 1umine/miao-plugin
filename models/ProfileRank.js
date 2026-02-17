@@ -74,10 +74,38 @@ export default class ProfileRank {
       8002: 8001,
       8004: 8003,
       8006: 8005,
-      8008: 8007
+      8008: 8007,
     }
-    let uids = charIdMap[charId] ? await redis.zRangeWithScores(`miao:rank:${groupId}:${type}:${charIdMap[charId]}`, -`${number}`, -1) : await redis.zRangeWithScores(`miao:rank:${groupId}:${type}:${charId}`, -`${number}`, -1)
-    return uids ? uids.reverse() : false
+    /** @type {Map<number, any>} */
+    const groupMemberMap = Bot?.gml?.get?.(groupId)
+
+    /** @type {Array} */
+    let uids = charIdMap[charId]
+      ? await redis.zRangeWithScores(
+          `miao:rank:${groupId}:${type}:${charIdMap[charId]}`,
+          0,
+          -1
+        )
+      : await redis.zRangeWithScores(
+          `miao:rank:${groupId}:${type}:${charId}`,
+          0,
+          -1
+        )
+    let filteredUids = []
+    for (const data of uids.reverse()) {
+      if (filteredUids.length >= number) {
+        break
+      }
+      const uid = data.uid || data.value
+      const userInfo = uid ? await ProfileRank.getUidInfo(uid) : null
+      if (groupMemberMap && groupMemberMap.size) {
+        const qq = userInfo?.qq
+        if (qq && groupMemberMap.get(qq)) {
+          filteredUids.push(data)
+        }
+      }
+    }
+    return filteredUids.length > 0 ? filteredUids : false
   }
 
   /**
