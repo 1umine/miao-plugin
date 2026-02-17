@@ -33,6 +33,10 @@ export const details = [{
   params: { cons_2 : true },
   cons: 6,
   dmg: ({}, dmg) => dmg(150 * 3, 'a2')
+}, {
+  title: '丝芙爱莫Q六段总伤',
+  params: { Havoc_Ruin: true, team1: true },
+  dmg: ({ talent, attr }, dmg) => dmg(talent.q['斩击伤害'] + talent.q['斩击最终段伤害'], 'q')
 }]
 
 export const defDmgIdx = 1
@@ -75,6 +79,31 @@ export const buffs = [{
   cons: 4,
     data: {
     atkPct: 40
+  }
+}, {
+  check: ({ params }) => params.team1 === true,
+  title: '2命芙宁娜Q增伤[dmg]%',
+  data: {
+    dmg: 100
+  }
+}, {
+  check: ({ params }) => params.team1 === true,
+  title: '莫娜Q增伤[dmg]%，讨龙提升攻击力[atkPct]%',
+  data: {
+    dmg: 60,
+    atkPct: 48
+  }
+}, {
+  check: ({ params }) => params.team1 === true,
+  title: '宗室莫娜提升攻击力[atkPct]%',
+  data: {
+    atkPct: 20
+  }
+}, {
+  check: ({ params }) => params.team1 === true,
+  title: '爱可菲减抗[kx]%',
+  data: {
+    kx: 55
   }
 }]
 
