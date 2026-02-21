@@ -54,7 +54,7 @@ app.reg({
   clearZombieRank: {
     name: '清理无效排名',
     fn: clearGroupZombieRankUid,
-    rule: /^#(星铁|原神)?清理无效排名$/
+    rule: /^#(星铁|原神)?清理无效排(名|行)$/
   },
 
   manageRank: {
