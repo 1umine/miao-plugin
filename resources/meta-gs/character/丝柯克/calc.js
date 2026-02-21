@@ -113,9 +113,10 @@ export const buffs = [{
   }
 }, {
   check: ({ params }) => params.team1 === true,
-  title: '0命爱可菲：减抗[kx]%',
+  title: '0命千岩爱可菲：减抗[kx]%，提升攻击力[atkPct]%',
   data: {
-    kx: 55
+    kx: 55,
+    atkPct: 20
   }
 }, {
   check: ({ params }) => params.team2 === true,
