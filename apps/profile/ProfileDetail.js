@@ -182,10 +182,10 @@ let ProfileDetail = {
     let enemyLv = isGs ? (await selfUser.getCfg('char.enemyLv', 103)) : 80
     let dmgCalc = await ProfileDetail.getProfileDmgCalc({ profile, enemyLv, mode, params })
 
-    let rank = false
+    let rankData = false
     if (e.group_id && !e._profile) {
-      rank = await ProfileRank.create({ group: e.group_id, uid, qq: e.user_id })
-      await rank.getRank(profile, true)
+      let rank = await ProfileRank.create({ groupId: e.group_id, uid, qq: e.user_id })
+      rankData = await rank.getRank(profile, true)
     }
 
     let artisDetail = profile.getArtisMark()
@@ -252,7 +252,8 @@ let ProfileDetail = {
       bodyClass: `char-${char.name}`,
       mode,
       wCfg,
-      changeProfile: e._profileMsg
+      changeProfile: e._profileMsg,
+      rankData
     }
     // 渲染图像
     const msgRes = await e.reply([await Common.render('character/profile-detail', renderData, { e, scale: 1.6, retType: 'base64' }), new Button(e).profile(char, uid)])

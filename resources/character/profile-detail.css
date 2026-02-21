@@ -307,6 +307,23 @@ body {
 .data-info .time {
   margin-left: 5px;
 }
+.data-info .rank-item {
+  margin-left: 6px;
+}
+.data-info .rank-val {
+  font-weight: 700;
+  color: #ffd27d;
+  text-shadow: 0 0 6px rgba(255, 210, 125, 0.6);
+}
+.data-info .rank-val.rank-top {
+  color: #ffeb99;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.85);
+}
+.data-info .rank-val.rank-none {
+  font-weight: normal;
+  color: rgba(255, 255, 255, 0.6);
+  text-shadow: none;
+}
 /***  dmg ***/
 .cont {
   border-radius: 10px;

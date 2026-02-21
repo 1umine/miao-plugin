@@ -97,6 +97,24 @@
       {{if data.updateTime}}
       <span class="time">{{data.updateTime}}</span>
       {{/if}}
+      {{set markRank = rankData?.mark?.rank || 0}}
+      {{set dmgRank = rankData?.dmg?.rank || 0}}
+      <span class="rank-item">
+        圣遗物排名：
+        {{if markRank}}
+          <strong class="rank-val {{markRank<=3?'rank-top':''}}">{{markRank}}</strong>
+        {{else}}
+          <strong class="rank-val rank-none">无法计算</strong>
+        {{/if}}
+      </span>
+      <span class="rank-item">
+        伤害排名：
+        {{if dmgRank}}
+          <strong class="rank-val {{dmgRank<=3?'rank-top':''}}">{{dmgRank}}</strong>
+        {{else}}
+          <strong class="rank-val rank-none">无法计算</strong>
+        {{/if}}
+      </span>
     </div>
   </div>
 
