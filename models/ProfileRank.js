@@ -76,8 +76,6 @@ export default class ProfileRank {
       8006: 8005,
       8008: 8007,
     }
-    /** @type {Map<number, any>} */
-    const groupMemberMap = Bot?.gml?.get?.(groupId)
 
     /** @type {Array} */
     let uids = charIdMap[charId]
@@ -98,11 +96,9 @@ export default class ProfileRank {
       }
       const uid = data.uid || data.value
       const userInfo = uid ? await ProfileRank.getUidInfo(uid) : null
-      if (groupMemberMap && groupMemberMap.size) {
-        const qq = userInfo?.qq
-        if (qq && groupMemberMap.get(qq)) {
-          filteredUids.push(data)
-        }
+      const info = Bot?.gml?.get(groupId)?.get?.(+userInfo?.qq || 0)
+      if (info) {
+        filteredUids.push(data)
       }
     }
     return filteredUids.length > 0 ? filteredUids : false
