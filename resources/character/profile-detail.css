@@ -312,6 +312,7 @@ body {
 }
 .data-info .rank-val {
   font-weight: 700;
+  font-size: 15px;
   color: #ffd27d;
   text-shadow: 0 0 6px rgba(255, 210, 125, 0.6);
 }
