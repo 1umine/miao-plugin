@@ -60,6 +60,64 @@ export default class ProfileRank {
     return ret
   }
 
+  /** 
+   * 清除不在群里的用户的排名数据
+   * @param {number} groupId 
+   * @param {number | string} charId 
+   * @param {'dmg' | 'mark' | ''} type 
+   */
+  static async clearGroupZombieRankUid(groupId, charId, type = 'mark') {
+    /** @type {Map<number, any>} */
+    const groupMemberMap = Bot?.gml?.get?.(groupId)
+    if (!groupMemberMap || !groupMemberMap.size) {
+      return 0
+    }
+
+    const clearRankKey = async (rankKey) => {
+      /** @type {Array} */
+      const uids = await redis.zRangeWithScores(rankKey, 0, -1)
+      if (!uids || uids.length === 0) {
+        return 0
+      }
+      let removedCount = 0
+      for (const data of uids) {
+        const uid = data.uid || data.value
+        if (!uid) {
+          continue
+        }
+        const userInfo = await ProfileRank.getUidInfo(uid)
+        const qq = +userInfo?.qq || 0
+        const info = qq ? groupMemberMap?.get?.(qq) : null
+        if (!info) {
+          await redis.zRem(rankKey, uid)
+          removedCount++
+        }
+      }
+      return removedCount
+    }
+
+    if (!charId) {
+      let keys = type ? await redis.keys(`miao:rank:${groupId}:${type}:*`) : await redis.keys(`miao:rank:${groupId}:*`)
+      let totalRemoved = 0
+      for (let key of keys) {
+        totalRemoved += await clearRankKey(key)
+      }
+      return totalRemoved
+    }
+
+    // 特殊处理开拓者的情况
+    let charIdMap = {
+      8002: 8001,
+      8004: 8003,
+      8006: 8005,
+      8008: 8007,
+    }
+
+    const finalCharId = charIdMap[charId] || charId
+    const rankKey = `miao:rank:${groupId}:${type}:${finalCharId}`
+    return await clearRankKey(rankKey)
+  }
+
   /**
    * 获取排行榜
    * @param groupId

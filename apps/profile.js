@@ -5,7 +5,7 @@ import ProfileStat from './profile/ProfileStat.js'
 import ProfileList from './profile/ProfileList.js'
 import { uploadCharacterImg, delProfileImg, profileImgList } from './character/ImgUpload.js'
 import { enemyLv } from './profile/ProfileUtils.js'
-import { groupRank, resetRank, refreshRank, manageRank, setDefDmgIdx } from './profile/ProfileRank.js'
+import { groupRank, resetRank, refreshRank, manageRank, setDefDmgIdx, clearGroupZombieRankUid } from './profile/ProfileRank.js'
 import { App, Cfg } from '#miao'
 
 let app = App.init({
@@ -49,6 +49,12 @@ app.reg({
     name: '刷新排名',
     fn: refreshRank,
     rule: /^#(星铁|原神)?(刷新|更新|重新加载)(群内|群|全部)*(排名|排行)$/
+  },
+
+  clearZombieRank: {
+    name: '清理无效排名',
+    fn: clearGroupZombieRankUid,
+    rule: /^#(星铁|原神)?清理无效排名$/
   },
 
   manageRank: {

@@ -3,6 +3,44 @@ import { Data, Common, Format, Cfg } from '#miao'
 import { Button, Character, ProfileRank, ProfileDmg, Player } from '#miao.models'
 import lodash from 'lodash'
 
+export async function clearGroupZombieRankUid(e) {
+  let groupId = e.group_id
+  if (!groupId) {
+    return true
+  }
+  if (!e.isMaster && !this.e.member?.is_admin ) {
+    e.reply('只有主人及群管理员可清理非当前本群成员的排名数据...')
+    return true
+  }
+  let groupCfg = await ProfileRank.getGroupCfg(groupId)
+  if (!groupCfg) {
+    e.reply('群面板排名功能已禁用，Bot主人可通过【#喵喵设置】启用...')
+    return true
+  }
+  e.reply('开始清理无效排名数据，请稍候...')
+  const types = ['mark', 'dmg']
+  const typeNames = {
+    mark: '圣遗物评分',
+    dmg: '伤害'
+  }
+  let totalRemoved = 0
+  let detail = []
+  for (let type of types) {
+    let removed = await ProfileRank.clearGroupZombieRankUid(groupId, '', type)
+    totalRemoved += removed
+    if (removed > 0) {
+      detail.push(`${typeNames[type]}:${removed}`)
+    }
+  }
+  if (totalRemoved === 0) {
+    e.reply('已完成清理：未发现无效排名数据。')
+  } else {
+    let detailText = detail.length > 0 ? `（${detail.join('，')}）` : ''
+    e.reply(`已完成清理：共移除${totalRemoved}条无效排名\n${detailText}。`)
+  }
+  return true
+}
+
 export async function groupRank (e) {
   const groupRank = Common.cfg('groupRank')
   let msg = e.original_msg || e.msg
