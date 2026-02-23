@@ -99,10 +99,10 @@ export const buffs = [{
   }
 },{
   check: ({ params }) => params.team === true,
-  title: '班玛希茜：班尼特6命风鹰剑宗室4、希诺宁0+0勇者4、茜特菈莉0+0',
+  title: '班玛希茜：6命宗室班尼特风鹰剑（15%增伤，20%攻击，1203攻击）、希诺宁0+0勇者、茜特菈莉0+0讨龙',
   data: {
     atkPlus: 1203,
-    atkPct: 25 + 20,
+    atkPct: 20 + 20 + 48,
     dmg: 15 + 40,
     kx: 36 + 20
   }
