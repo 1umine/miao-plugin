@@ -318,7 +318,7 @@ async function renderCharRankList ({ e, uids, char, mode, groupId }) {
     } else {
       title = `${e.isSr ? '*' : '#'}${char.name}${modeTitleMap[mode]}排行`
     }
-    list = lodash.sortBy(list, mode === 'dmg' ? '_dmg' : '_mark').reverse()
+    // list = lodash.sortBy(list, mode === 'dmg' ? '_dmg' : '_mark').reverse()
   } else {
     title = `${e.isSr ? '*' : '#'}${mode === 'mark' ? '最高分' : '最强'}排行`
     list = lodash.sortBy(list, ['uid', '_star', 'id'])
