@@ -23,6 +23,10 @@ let ProfileDetail = {
     let mode = 'profile'
     let profileChange = false
     let changeMsg = msg
+    const showDmgSuggest = /伤害建议\d*$/.test(msg)
+    if (showDmgSuggest) {
+      msg = msg.replace(/建议/, '')
+    }
     let pc = ProfileChange.matchMsg(msg)
 
     if (pc && pc.char && pc.change) {
@@ -51,10 +55,6 @@ let ProfileDetail = {
     let name = msg.replace(/#|老婆|老公|星铁|原神/g, '').trim()
     msg = msg.replace('面版', '面板')
     let dmgRet = /(?:伤害|武器)(\d*)$/.exec(name)
-    const showDmgSuggest = /伤害建议\d*$/.test(name)
-    if (showDmgSuggest) {
-      name = name.replace(/建议/, '')
-    }
 
     let dmgIdx = 0; let idxIsInput = false
     if (/(最强|最高|最高分|最牛|第一)/.test(msg)) {

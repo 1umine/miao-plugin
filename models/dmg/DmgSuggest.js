@@ -1,6 +1,6 @@
 /**
  * 根据伤害计算矩阵生成提升建议
- * @param {any} dmgCalc - 伤害计算结果对象，包含 dmgCfg.attr 和 dmgRet 
+ * @param {any} dmgCalc - 伤害计算结果对象，包含 dmgCfg.attr 和 dmgRet
  * @returns {Promise<string | null>}
  */
 export default async function generateDmgAdvice(dmgCalc) {
@@ -8,91 +8,87 @@ export default async function generateDmgAdvice(dmgCalc) {
   const dmgRet = dmgCalc?.dmgRet || []
 
   if (!attrs.length || !dmgRet.length || attrs.length !== dmgRet.length) {
-    return null
+    return "数据不足，无法生成建议。"
   }
-
-  // 计算每个属性的“增益潜力”和“损失风险”
-  // colScores[j]: 增加属性 j 的平均收益 (列平均)
-  // rowScores[i]: 减少属性 i 的平均损失 (行平均，通常为负数，越小越重要)
-  const colScores = new Array(attrs.length).fill(0)
-  const rowScores = new Array(attrs.length).fill(0)
-
-  let maxVal = -Infinity
-  let bestSwap = null // { from: attrName, to: attrName, val: number }
 
   const n = attrs.length
+  const colScores = new Array(n).fill(0) // 提升收益 (列平均)
+  const rowScores = new Array(n).fill(0) // 削减损失 (行平均)
+  const swapCandidates = [] // 所有有价值的置换方案
+
   for (let i = 0; i < n; i++) {
     for (let j = 0; j < n; j++) {
-      const cell = dmgRet[i][j]
-      const val = parseFloat(cell.val) || 0
+      // 确保数值可计算
+      const val = parseFloat(dmgRet[i][j]?.val) || 0
 
-      // 累加列收益 (增加属性 j)
       colScores[j] += val
-      // 累加行损失 (减少属性 i)
       rowScores[i] += val
 
-      // 寻找最佳单点置换 (val 最大), 通常对角线 i==j 代表不变，val 应接近 0。寻找 i != j 且 val > 0 的情况
-      if (i !== j && val > maxVal) {
-        maxVal = val
-        bestSwap = {
-          from: attrs[i].title,
-          fromVal: attrs[i].text,
-          to: attrs[j].title,
-          toVal: attrs[j].text,
-          val: val,
-        }
+      // 收集所有有价值的置换 (行 i 换给 列 j)，排除自身互换
+      if (i !== j && val > 0) {
+        swapCandidates.push({
+          val,
+          from: i,
+          to: j,
+          fromTitle: attrs[i].title,
+          toTitle: attrs[j].title,
+        })
       }
     }
-    // 计算平均值
-    colScores[i] = colScores[i] / n
-    rowScores[i] = rowScores[i] / n
+    colScores[i] /= n
+    rowScores[i] /= n
   }
 
-  // 生成属性排名, 计算提升优先级，列平均分越高，提升该属性收益越大
-  const upgradeRank = attrs
-    .map((a, i) => ({ ...a, score: colScores[i] }))
+  // 优先提升：列平均分最高的前 2 个属性
+  const upgradeCandidates = attrs
+    .map((a, i) => ({ title: a.title, score: colScores[i] }))
     .sort((a, b) => b.score - a.score)
+    .filter((i) => i.score > 0) // 只保留有正收益的
+    .slice(0, 2)
 
-  // 核心属性保护：行平均分越低 (负得越多)，该属性越不能动
-  const protectRank = attrs
-    .map((a, i) => ({ ...a, score: rowScores[i] }))
-    .sort((a, b) => a.score - b.score) // 从小到大，负数绝对值大的在前
+  // 替换建议：按收益排序，取前 3 个有价值的置换
+  const topSwaps = swapCandidates.sort((a, b) => b.val - a.val).slice(0, 3) // 最多显示 3 个替换建议
 
-  // 构建建议文本
-  const lines = []
-  if (bestSwap && bestSwap.val > 0) {
-    lines.push(
-      `1. 最佳词条置换：将 [${bestSwap.from} -${bestSwap.fromVal}] 换为 [${bestSwap.to} +${bestSwap.toVal}]`,
-    )
-    lines.push(`   - 期望伤害提升约：${bestSwap.val.toFixed(0)}`)
+  // 保持水平：行平均分最低 (负得最多) 的属性，且损失显著
+  const protectCandidate = attrs
+    .map((a, i) => ({ title: a.title, score: rowScores[i] }))
+    .sort((a, b) => a.score - b.score)
+    .find((i) => i.score < -5) // 阈值可根据实际伤害量级调整
+
+  const parts = ["根据当前伤害变化情况"]
+
+  if (upgradeCandidates.length > 0) {
+    const titles = upgradeCandidates.map((i) => i.title).join("、")
+    parts.push(`【${titles}】词条建议优先提升`)
   } else {
-    lines.push(`1. 当前配置较优，未检测到明显的单词条置换提升空间。`)
+    parts.push("当前属性收益较为均衡")
   }
 
-  // 优先提升属性
-  const topUpgrade = upgradeRank[0]
-  if (topUpgrade && topUpgrade.score > 0) {
-    lines.push(`2. 优先堆叠属性：建议优先提升 ${topUpgrade.title}`)
-    lines.push(
-      `   - 该属性平均收益最高，每步变化期望提升约 ${topUpgrade.score.toFixed(0)}`,
+  if (topSwaps.length > 0) {
+    const swapTexts = topSwaps.map(
+      (s) => `【${s.fromTitle}】替换为【${s.toTitle}】`,
     )
+    if (swapTexts.length === 1) {
+      parts.push(`或将 ${swapTexts[0]}`)
+    } else {
+      parts.push(`或考虑将 ${swapTexts.join("、")}`)
+    }
   }
 
-  const coreAttr = protectRank[0]
-  // 如果核心属性的平均损失很大 (负值绝对值大)
-  if (coreAttr && coreAttr.score < -10) {
-    lines.push(`3. 请确保 ${coreAttr.title} 不低于当前水平`)
-    lines.push(
-      `   - 削减该属性会导致伤害大幅下降 (平均损失 ${coreAttr.score.toFixed(0)})`,
-    )
+  if (protectCandidate) {
+    parts.push(`并注意保持当前的【${protectCandidate.title}】水平`)
   }
 
-  const sample = dmgRet[0][0]
-  if (sample && sample.dmg !== sample.avg) {
-    lines.push(
-      `\n注：以上数据基于期望伤害 (Avg)。若追求爆发，请参考暴击伤害 (Dmg) 列。`,
-    )
+  let result = parts[0] + "，"
+  const content = parts.slice(1)
+
+  if (content.length === 0) {
+    result += "暂无显著提升建议。"
+  } else if (content.length === 1) {
+    result += content[0] + "。"
+  } else {
+    result += content.join("，") + "。"
   }
 
-  return lines.join("\n")
+  return result
 }
