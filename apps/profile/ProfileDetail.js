@@ -17,7 +17,7 @@ let ProfileDetail = {
     if (!msg) {
       return false
     }
-    if (!/详细|详情|面板|面版|圣遗物|遗器|伤害|武器|换/.test(msg)) {
+    if (!/详细|详情|面板|面版|圣遗物|遗器|伤害|建议|武器|换/.test(msg)) {
       return false
     }
     let mode = 'profile'
