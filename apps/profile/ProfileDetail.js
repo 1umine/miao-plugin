@@ -2,7 +2,7 @@ import lodash from 'lodash'
 import { getTargetUid, getProfileRefresh } from './ProfileCommon.js'
 import ProfileList from './ProfileList.js'
 import { Cfg, Common, Data, Format } from '#miao'
-import { Button, MysApi, ProfileRank, Character, Weapon, Artifact } from '#miao.models'
+import { Button, MysApi, ProfileRank, Character, Weapon, Artifact, ProfileDmg } from '#miao.models'
 
 import ProfileChange from './ProfileChange.js'
 import { profileArtis } from './ProfileArtis.js'
@@ -51,6 +51,11 @@ let ProfileDetail = {
     let name = msg.replace(/#|老婆|老公|星铁|原神/g, '').trim()
     msg = msg.replace('面版', '面板')
     let dmgRet = /(?:伤害|武器)(\d*)$/.exec(name)
+    const showDmgSuggest = /伤害建议\d*$/.test(name)
+    if (showDmgSuggest) {
+      name = name.replace(/建议/, '')
+    }
+
     let dmgIdx = 0; let idxIsInput = false
     if (/(最强|最高|最高分|最牛|第一)/.test(msg)) {
       mode = /(分|圣遗物|遗器|评分|ACE)/.test(msg) ? 'rank-mark' : 'rank-dmg'
@@ -112,7 +117,7 @@ let ProfileDetail = {
     }
 
     if (mode === 'profile' || mode === 'dmg' || mode === 'weapon') {
-      return ProfileDetail.render(e, char, mode, { dmgIdx, idxIsInput })
+      return ProfileDetail.render(e, char, mode, { dmgIdx, idxIsInput }, showDmgSuggest)
     } else if (mode === 'refresh') {
       await ProfileList.refresh(e)
       return true
@@ -122,7 +127,7 @@ let ProfileDetail = {
     return true
   },
 
-  async render (e, char, mode = 'profile', params = {}) {
+  async render (e, char, mode = 'profile', params = {}, showDmgSuggest = false) {
     let selfUser = await MysApi.initUser(e)
 
     if (!selfUser) {
@@ -181,6 +186,11 @@ let ProfileDetail = {
 
     let enemyLv = isGs ? (await selfUser.getCfg('char.enemyLv', 103)) : 80
     let dmgCalc = await ProfileDetail.getProfileDmgCalc({ profile, enemyLv, mode, params })
+    /** @type {string | null} */
+    let dmgSuggest = null
+    if (showDmgSuggest && mode === 'dmg' && dmgCalc) {
+      dmgSuggest = dmgCalc ? await ProfileDmg.getDmgSuggest(dmgCalc) : null
+    }
 
     let rankData = false
     if (e.group_id && !e._profile) {
@@ -247,6 +257,7 @@ let ProfileDetail = {
       elem: char.elem,
       hsr_paths: char.weapon,
       dmgCalc,
+      dmgSuggest,
       artisDetail,
       artisKeyTitle,
       bodyClass: `char-${char.name}`,

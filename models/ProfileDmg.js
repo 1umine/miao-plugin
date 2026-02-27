@@ -5,6 +5,7 @@ import { Character } from './index.js'
 import DmgBuffs from './dmg/DmgBuffs.js'
 import DmgAttr from './dmg/DmgAttr.js'
 import DmgCalc from './dmg/DmgCalc.js'
+import DmgSuggest from './dmg/DmgSuggest.js'
 import { MiaoError, Meta, Common } from '#miao'
 import { miaoPath } from '#miao.path'
 
@@ -314,5 +315,13 @@ export default class ProfileDmg extends Base {
       enemyLv,
       createdBy
     }
+  }
+
+  /**
+   * 获取理论伤害提升建议
+   * @param {any} dmgCalc - 伤害计算结果对象，包含 dmgCfg.attr 和 dmgRet 
+   */
+  static async getDmgSuggest (dmgCalc) {
+    return await DmgSuggest(dmgCalc)
   }
 }

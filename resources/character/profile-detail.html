@@ -389,6 +389,15 @@
     </div>
     {{/if}}
 
+    {{if dmgSuggest}}
+    <div class="dmg-cont dmg-suggest cont">
+      <div class="cont-title">伤害提升建议<span>基于当前伤害变化表生成</span></div>
+      <div class="cont-body dmg-suggest-body">
+        {{dmgSuggest}}
+      </div>
+    </div>
+    {{/if}}
+
     <div class="dmg-cont dmg-msg cont">
       <div class="cont-title">Buff列表<span>部分Buff的触发条件以及层数可能影响实际伤害结果</span></div>
       <div class="cont-table">
