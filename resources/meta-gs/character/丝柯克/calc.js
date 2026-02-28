@@ -23,6 +23,10 @@ export const details = [{
   params: { Havoc_Ruin: true, team1: true },
   dmg: ({ talent, attr }, dmg) => dmg(talent.q['斩击伤害'] + talent.q['斩击最终段伤害'], 'q')
 }, {
+  title: '丝芙1爱4莫Q六段总伤',
+  params: { Havoc_Ruin: true, team1: true, team3_extra: true },
+  dmg: ({ talent, attr }, dmg) => dmg(talent.q['斩击伤害'] + talent.q['斩击最终段伤害'], 'q')
+}, {
   title: '丝芙茜夏普攻尾段伤害',
   params: { cons_2: true, team2: true },
   dmg: ({ talent, attr }, dmg) => dmg(talent.e['五段伤害'], 'a')
@@ -110,6 +114,13 @@ export const buffs = [{
   title: '讨龙莫娜：提升攻击力[atkPct]%',
   data: {
     atkPct: 48
+  }
+}, {
+  check: ({ params }) => params.team3_extra === true,
+  title: '1爱4莫：暴击率提升[cpct]%，暴击伤害提升[cdmg]%',
+  data: {
+    cpct: 15,
+    cdmg: 60
   }
 }, {
   check: ({ params }) => params.team1 === true,
