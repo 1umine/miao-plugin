@@ -28,9 +28,9 @@ export const details = [{
     dmg: ({ calc, attr, talent }, { basic }) => basic(calc(attr.atk) * talent.q['雷霆交响额外伤害'] / 100, '', 'lunarCharged')
   },
   {
-    title: 'Q雷霆交响释放伤害',
-    params: { Lunar: true, Moonsign: 3 },
-    dmg: ({ calc, attr, talent }, { basic }) => basic(calc(attr.atk) * talent.q['雷霆交响伤害'] / 100, '', 'lunarCharged')
+    title: '菲少机砂Q雷霆交响额外伤害',
+    params: { Lunar: true, Moonsign: 3, team: 1 },
+    dmg: ({ calc, attr, talent }, { basic }) => basic(calc(attr.atk) * talent.q['雷霆交响额外伤害'] / 100, '', 'lunarCharged')
   },
   {
     title: '单人月感电伤害',
@@ -84,6 +84,16 @@ export const buffs = [
     cons: 6,
     data: {
       elevated: 45
+    }
+  },
+  {
+    title: '01少01机6砂：哥伦比娅Q月曜反应伤害提升40%，纺月120精通，伊涅芙天赋提升2400*6%=144精通，月感电伤害提升40%，讨龙砂糖提升[atkPct]%攻击力、200精通，减抗[kx]%',
+    check: ({ params }) => params.team === 1,
+    data: {
+      lunarCharged: 40 + 40,
+      mastery: 120 + 144 + 200,
+      atkPct: 48,
+      kx: 40
     }
   }
 ]
