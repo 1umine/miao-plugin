@@ -14,7 +14,7 @@ export const defParams = { Memosprite: true }
 export const mainAttr = 'hp,cpct,cdmg'
 
 export const buffs = [{
-  title: '终结技：昔涟和德谬歌暴击率提高[dmg]%',
+  title: '终结技：昔涟和德谬歌暴击率提高[cpct]%',
   data: {
     cpct: ({ talent }) => talent.q['暴击率提高'] * 100
   }
