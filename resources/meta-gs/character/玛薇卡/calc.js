@@ -30,6 +30,10 @@ export const details = [{
   title: '班玛希茜(高配)满战意Q融化伤害',
   params: { team_best: true, Flamestrider: true },
   dmg: ({ talent, attr }, dmg) => dmg(talent.q['技能伤害'], 'q,nightsoul', 'melt')
+},{
+  title: '超载队满战意Q首刀',
+  params: { Flamestrider: true, team_id: 1 },
+  dmg: ({ talent, attr }, dmg) => dmg(talent.q['技能伤害'], 'q,nightsoul')
 }]
 
 export const defParams = { Nightsoul: true }
@@ -117,6 +121,15 @@ export const buffs = [{
     qPlus: 1500 * 2,
     mastery: 250 + 120
   }
+},{
+  check: ({ params }) => params.team_id === 1,
+  title: '火伊夏欧：2命宗室伊安珊810攻击力、30%+20%攻击力、6命夏沃蕾60%增伤、40%攻击、40%减抗、勇者欧洛伦40%增伤',
+  data: {
+    atkPlus: 810,
+    atkPct: 30 + 20 + 40,
+    dmg: 60 + 40,
+    kx: 40
+  }
 }]
 
-export const createdBy = '冰翼'
+export const createdBy = '冰翼 & Lumine'
