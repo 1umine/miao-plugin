@@ -17,6 +17,10 @@ export const details = [{
   title: '6命「特级冻霜芭菲」伤害',
   cons: 6,
   dmg: ({}, dmg) => dmg(500, 'e')
+}, {
+  title: '丝芙爱「冻霜芭菲」伤害',
+  params: { team_id: 1 },
+  dmg: ({ talent }, dmg) => dmg(talent.e['冻霜芭菲伤害'], 'e')
 }]
 
 export const defDmgIdx = 1
@@ -37,6 +41,12 @@ export const buffs = [{
   cons: 1,
   data: {
     cdmg: 60
+  }
+}, {
+  title: '2命芙宁娜Q：提供[dmg]%增伤',
+  check: ({ params }) => params.team_id === 1,
+  data: {
+    dmg: 100
   }
 }]
 
