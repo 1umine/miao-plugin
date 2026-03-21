@@ -46,11 +46,13 @@ export const details = [{
   dmg: ({}, dmg) => dmg(555)
 }, {
   title: '【魔导·秘仪】6命Q后「嘭嘭轰击」伤害',
-  params: { cons_6: true },
+  cons: 6,
+  params: { cons_6: true, q: 1 },
   dmg: ({ talent }, dmg) => dmg(talent.a['重击伤害'], 'a2')
 }, {
   title: '【魔导·秘仪】6命Q后「嘭嘭轰击」蒸发伤害',
-  params: { cons_6: true },
+  cons: 6,
+  params: { cons_6: true, q: 1 },
   dmg: ({ talent }, dmg) => dmg(talent.a['重击伤害'], 'a2', 'vaporize')
 }
 ]
@@ -75,10 +77,10 @@ export const buffs = [{
     enemyDef: 23
   }
 }, {
-  title: '可莉6命：释放轰轰火花后获得10%火元素伤害加成',
+  title: '可莉6命：释放轰轰火花后获得50%火元素伤害加成',
   cons: 6,
   data: {
-    dmg: ({ params }) => params.q === false ? 0 : 10
+    dmg: ({ params }) => params.q === false ? 0 : 50
   }
 }, {
   check: ({ params }) => params.team === true,
