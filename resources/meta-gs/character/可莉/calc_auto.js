@@ -71,10 +71,28 @@ export const buffs = [{
     a2Dmg: 50
   }
 }, {
+  title: '可莉天赋：获得【魔导·秘仪】效果时，3枚「轰轰勋章」使特殊重击「嘭嘭轰击」造成原本150%的伤害。',
+  data: {
+    a2Multi: 50
+  }
+}, {
+  title: '可莉1命：攻击与施放技能时，有几率召唤火花。触发该效果后的12秒内，可莉的攻击力提升60%',
+  cons: 1,
+  data: {
+    atkPct: 60
+  }
+}, {
   title: '可莉2命：蹦蹦炸弹的诡雷会使敌人的防御力降低23%',
   cons: 2,
   data: {
     enemyDef: 23
+  }
+}, {
+  check: ({ params }) => params.cons_4 === true,
+  title: '可莉4命：触发额外爆炸时，如果可莉在场上，则造成的伤害提升100%',
+  cons: 4,
+  data: {
+    dmg: 100
   }
 }, {
   title: '可莉6命：释放轰轰火花后获得50%火元素伤害加成',
@@ -134,24 +152,6 @@ export const buffs = [{
     atkPct: 40,
     kx: 40,
     mastery: 200
-  }
-}, {
-  title: '可莉天赋：获得【魔导·秘仪】效果时，3枚「轰轰勋章」使特殊重击「嘭嘭轰击」造成原本150%的伤害。',
-  data: {
-    a2Multi: 50
-  }
-}, {
-  title: '可莉1命：攻击与施放技能时，有几率召唤火花。触发该效果后的12秒内，可莉的攻击力提升60%',
-  cons: 1,
-  data: {
-    atkPct: 60
-  }
-}, {
-  check: ({ params }) => params.cons_4 === true,
-  title: '可莉4命：触发额外爆炸时，如果可莉在场上，则造成的伤害提升100%',
-  cons: 4,
-  data: {
-    dmg: 100
   }
 }, 'vaporize']
 
