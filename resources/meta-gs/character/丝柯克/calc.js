@@ -27,6 +27,10 @@ export const details = [{
   params: { Havoc_Ruin: true, team1: true, team3_extra: true },
   dmg: ({ talent, attr }, dmg) => dmg(talent.q['斩击伤害'] + talent.q['斩击最终段伤害'], 'q')
 }, {
+  title: '【千岩勇者】丝芙1爱4莫Q六段总伤',
+  params: { Havoc_Ruin: true, team4: true, team3_extra: true },
+  dmg: ({ talent, attr }, dmg) => dmg(talent.q['斩击伤害'] + talent.q['斩击最终段伤害'], 'q')
+}, {
   title: '丝芙茜夏普攻尾段伤害',
   params: { cons_2: true, team2: true },
   dmg: ({ talent, attr }, dmg) => dmg(talent.e['五段伤害'], 'a')
@@ -98,19 +102,19 @@ export const buffs = [{
   }
 }, {
   check: ({ params }) => params.team1 === true || params.team2 === true,
-  title: '2命芙宁娜：元素爆发增伤[dmg]%',
+  title: '2命芙宁娜：气氛增伤[dmg]%',
   data: {
     dmg: 100
   }
 }, {
-  check: ({ params }) => params.team1 === true,
+  check: ({ params }) => params.team1 === true || params.team4 === true,
   title: '莫娜Q：增伤[dmg]%，宗室提升攻击力[atkPct]%',
   data: {
     dmg: 60,
     atkPct: 20
   }
 }, {
-  check: ({ params }) => params.team1 === true,
+  check: ({ params }) => params.team1 === true || params.team4 === true,
   title: '讨龙莫娜：提升攻击力[atkPct]%',
   data: {
     atkPct: 48
@@ -140,6 +144,14 @@ export const buffs = [{
   title: '茜特菈莉：勇者增伤[dmg]%',
   data: {
     dmg: 40
+  }
+}, {
+  check: ({ params }) => params.team4 === true,
+  title: '千岩芙勇者专爱：芙宁娜增伤100%，提升20%攻击力，爱可菲减抗55%，提升12%伤害，32%攻击力',
+  data: {
+    dmg: 100 + 12,
+    atkPct: 20 + 32,
+    kx: 55,
   }
 }]
 
