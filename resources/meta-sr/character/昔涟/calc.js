@@ -38,7 +38,7 @@ export const details = [{
     }
   }
 }, {
-  title: ({ params }) => `结界真实伤害·强化普攻整套(按${params.enemyCount}目标)`,
+  title: ({ params } = {}) => `结界真实伤害·强化普攻整套(按${params?.enemyCount || 1}目标)`,
   dmg: ({ talent, calc, attr, cons, params }, { basic }) => {
     const enemyCount = Math.max(params.enemyCount || 1, 1)
     const singleRet = basic(calc(attr.hp) * talent.a2['单体伤害'], 'a2')
@@ -52,7 +52,7 @@ export const details = [{
     }
   }
 }, {
-  title: ({ params }) => `结界真实伤害·忆灵技整段(按${params.enemyCount}目标)`,
+  title: ({ params } = {}) => `结界真实伤害·忆灵技整段(按${params?.enemyCount || 1}目标)`,
   dmg: ({ talent, calc, attr, cons, params }, { basic }) => {
     const enemyCount = Math.max(params.enemyCount || 1, 1)
     const trueDmgPct = getBarrierTrueDmgPct({ talent, cons, params })
@@ -63,7 +63,7 @@ export const details = [{
     }
   }
 }, {
-  title: ({ params }) => `献予「真我」之诗弹射总伤害(基础${params.storyBounce}次)`,
+  title: ({ params } = {}) => `献予「真我」之诗弹射总伤害(基础${params?.storyBounce || 0}次)`,
   dmg: ({ talent, calc, attr, cons, params }, { basic }) => {
     const baseBounce = Math.max(params.storyBounce || 0, 0)
     const bounceCount = baseBounce + (cons > 0 ? 12 : 0)
