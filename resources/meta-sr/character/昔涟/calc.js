@@ -30,9 +30,11 @@ export const details = [{
 }, {
   title: '结界真实伤害·普攻单段',
   dmg: ({ talent, calc, attr, cons, params }, { basic }) => {
+    const trueDmgPct = getBarrierTrueDmgPct({ talent, cons, params })
     const baseRet = basic(calc(attr.hp) * talent.a['技能伤害'], 'a')
     return {
-      avg: baseRet.avg * getBarrierTrueDmgPct({ talent, cons, params })
+      dmg: baseRet.dmg * trueDmgPct,
+      avg: baseRet.avg * trueDmgPct
     }
   }
 }, {
@@ -41,18 +43,23 @@ export const details = [{
     const enemyCount = Math.max(params.enemyCount || 1, 1)
     const singleRet = basic(calc(attr.hp) * talent.a2['单体伤害'], 'a2')
     const aoeRet = basic(calc(attr.hp) * talent.a2['全体伤害'], 'a2')
-    const totalBase = singleRet.avg + aoeRet.avg * enemyCount
+    const trueDmgPct = getBarrierTrueDmgPct({ talent, cons, params })
+    const totalDmg = singleRet.dmg + aoeRet.dmg * enemyCount
+    const totalAvg = singleRet.avg + aoeRet.avg * enemyCount
     return {
-      avg: totalBase * getBarrierTrueDmgPct({ talent, cons, params })
+      dmg: totalDmg * trueDmgPct,
+      avg: totalAvg * trueDmgPct
     }
   }
 }, {
   title: ({ params }) => `结界真实伤害·忆灵技整段(按${params.enemyCount}目标)`,
   dmg: ({ talent, calc, attr, cons, params }, { basic }) => {
     const enemyCount = Math.max(params.enemyCount || 1, 1)
+    const trueDmgPct = getBarrierTrueDmgPct({ talent, cons, params })
     const meRet = basic(calc(attr.hp) * talent.me['技能伤害'], 'me')
     return {
-      avg: meRet.avg * enemyCount * getBarrierTrueDmgPct({ talent, cons, params })
+      dmg: meRet.dmg * enemyCount * trueDmgPct,
+      avg: meRet.avg * enemyCount * trueDmgPct
     }
   }
 }, {
@@ -60,9 +67,11 @@ export const details = [{
   dmg: ({ talent, calc, attr, cons, params }, { basic }) => {
     const baseBounce = Math.max(params.storyBounce || 0, 0)
     const bounceCount = baseBounce + (cons > 0 ? 12 : 0)
+    const storyMulti = getE4StoryMulti({ cons, params })
     const bounceRet = basic(calc(attr.hp) * talent.me2['「真我」之诗•随机单体伤害'], 'me')
     return {
-      avg: bounceRet.avg * bounceCount * getE4StoryMulti({ cons, params })
+      dmg: bounceRet.dmg * bounceCount * storyMulti,
+      avg: bounceRet.avg * bounceCount * storyMulti
     }
   }
 }]
