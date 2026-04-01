@@ -25,7 +25,7 @@ export const details = [
   },
   {
     title: "Q极恶技·灭6段总伤害",
-    params: { Havoc_Ruin: true },
+    params: { Havoc_Ruin: true, Q: true },
     dmg: QDmg,
   },
   {
@@ -35,22 +35,22 @@ export const details = [
   },
   {
     title: "丝芙爱莫Q六段总伤",
-    params: { Havoc_Ruin: true, team1: true },
+    params: { Havoc_Ruin: true, team1: true, Q: true },
     dmg: QDmg,
   },
   {
     title: "丝芙1爱4莫Q六段总伤",
-    params: { Havoc_Ruin: true, team1: true, team3_extra: true },
+    params: { Havoc_Ruin: true, team1: true, team3_extra: true, Q: true },
     dmg: QDmg,
   },
   {
     title: "【千岩勇者】丝芙1爱4莫Q六段总伤",
-    params: { Havoc_Ruin: true, team4: true, team3_extra: true },
+    params: { Havoc_Ruin: true, team4: true, team3_extra: true, Q: true },
     dmg: QDmg,
   },
   {
     title: "【千岩勇者】丝芙1爱4莫普攻尾段",
-    params: { Havoc_Ruin: true, team4: true, team3_extra: true },
+    params: { Havoc_Ruin: true, team4: true, team3_extra: true, },
     dmg: ({ talent, attr }, dmg) => dmg(talent.e["五段伤害"], "a"),
   },
   {
@@ -60,7 +60,7 @@ export const details = [
   },
   {
     title: "丝芙茜夏Q六段总伤",
-    params: { Havoc_Ruin: true, team2: true },
+    params: { Havoc_Ruin: true, team2: true, Q: true },
     dmg: QDmg,
   },
   {
@@ -141,6 +141,7 @@ export const buffs = [
   },
   {
     title: "丝柯克6命：汲取3枚裂隙Q增加3段750%倍率协同伤害",
+    check: ({ params }) => params.Q === true,
     cons: 6,
   },
   {
