@@ -50,7 +50,7 @@ export const details = [
   },
   {
     title: "【千岩勇者】丝芙1爱4莫普攻尾段",
-    params: { Havoc_Ruin: true, team4: true, team3_extra: true, },
+    params: { Havoc_Ruin: true, team4: true, team3_extra: true, cons_2: true },
     dmg: ({ talent, attr }, dmg) => dmg(talent.e["五段伤害"], "a"),
   },
   {
