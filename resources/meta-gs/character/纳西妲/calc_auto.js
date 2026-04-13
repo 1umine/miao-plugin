@@ -49,7 +49,7 @@ export const details = [{
   }
 }, {
   title: '妲芙久菈开Q灭净三业·蔓激化',
-  params: { e2: true, team_id: 2 },
+  params: { e2: true, team_id: 2, team: false },
   dmg: ({ talent, attr }, { basic }) => {
     const td = talent.e['灭净三业伤害2']
     const em = attr.mastery
