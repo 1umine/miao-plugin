@@ -114,7 +114,7 @@ export const buffs = [
       lunarBloom: 40 + 40,
       kx: 25,
       fypct: 14 + 14,
-      fyplus: 4800 * 3,
+      fyplus: 4800,
     }
   }
 ]
