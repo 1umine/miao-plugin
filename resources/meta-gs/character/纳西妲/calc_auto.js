@@ -48,6 +48,15 @@ export const details = [{
     return basic(td[0] * atk / 100 + td[1] * em / 100, 'e', 'spread')
   }
 }, {
+  title: '妲芙久菈开Q灭净三业·蔓激化',
+  params: { e2: true, team_id: 2 },
+  dmg: ({ talent, attr }, { basic }) => {
+    const td = talent.e['灭净三业伤害2']
+    const em = attr.mastery
+    const atk = attr.atk
+    return basic(td[0] * atk / 100 + td[1] * em / 100, 'e', 'spread')
+  }
+}, {
   title: '六命特殊E伤害',
   cons: 6,
   dmg: ({ attr }, { basic }) => basic(attr.atk * 2.00 + attr.mastery * 4.00, 'e')
@@ -96,10 +105,20 @@ export const buffs = [{
     atkPct: 40
   }
 }, {
+  check: ({ params }) => (params.team_id === 2),
+  title: '妲芙久菈组队buff：双草提升80精通,纺月提升60精通,芙宁娜增伤100%',
+  data: {
+    mastery: 80 + 60,
+    dmg: 100
+  }
+}, {
   title: '草神被动：开Q元素精通提升[mastery]',
   sort: 7,
   data: {
-    mastery: ({ attr, params }) => (params.q === false ? 0 : 1) * Math.min(250, attr.mastery * 0.25)
+    mastery: ({ attr, params }) => {
+      if (params.team_id === 2) return 250
+      return (params.q === false ? 0 : 1) * Math.min(250, attr.mastery * 0.25)
+    }
   }
 }, {
   title: '草神被动：基于元素精通提升灭净三业伤害[eDmg]%，暴击率[eCpct]%',

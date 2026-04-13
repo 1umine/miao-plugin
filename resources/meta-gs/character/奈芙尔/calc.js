@@ -43,10 +43,15 @@ export const details = [
     title: '绽放伤害',
     params: { Moonsign: 1 },
     dmg: ({}, { reaction }) => reaction('bloom')
-  }
+  },
+  {
+    title: '奈少菈E后幻戏协同三段',
+    params: { Lunar: true, Phantasm_Performance: true, team_id: 1 },
+    dmg: ({ talent, calc, attr, cons, params }, { basic }) => basic((calc(attr.mastery) * talent.e['幻戏虚影三段'] / 100) * (1 + Math.min((params.Veil_of_Falsehood || 99), (cons >= 2 ? 5 : 3)) * 0.08), '', 'lunarBloom')
+  },
 ]
 
-export const defDmgIdx = 4
+export const defDmgIdx = 8
 export const mainAttr = 'atk,cpct,cdmg,mastery'
 export const defParams = { Moonsign: 3 }
 export const buffs = [
@@ -100,7 +105,18 @@ export const buffs = [
     data: {
       elevated: ({ params }) => ((params.Moonsign || 0) >= 2 ? 15 : 0)
     }
+  },
+  {
+    check: ({ params }) => params.team_id === 1,
+    title: '奈少菈组队buff：基础伤害提升14%+14%，双草精通提升80,纺月提升120精通,少女Q增伤40%,菈乌玛Q伤害值提升4800*3，减抗25%,纺夜天境40%增伤',
+    data: {
+      mastery: 80 + 120,
+      lunarBloom: 40 + 40,
+      kx: 25,
+      fypct: 14 + 14,
+      fyplus: 4800 * 3,
+    }
   }
 ]
 
-export const createdBy = 'kvcfdd'
+export const createdBy = 'kvcfdd & Lumine'
