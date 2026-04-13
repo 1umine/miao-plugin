@@ -45,7 +45,7 @@ export const details = [
     dmg: ({}, { reaction }) => reaction('bloom')
   },
   {
-    title: '奈少菈E后幻戏协同三段',
+    title: '少菈奈砂E后幻戏协同三段',
     params: { Lunar: true, Phantasm_Performance: true, team_id: 1 },
     dmg: ({ talent, calc, attr, cons, params }, { basic }) => basic((calc(attr.mastery) * talent.e['幻戏虚影三段'] / 100) * (1 + Math.min((params.Veil_of_Falsehood || 99), (cons >= 2 ? 5 : 3)) * 0.08), '', 'lunarBloom')
   },
@@ -108,13 +108,13 @@ export const buffs = [
   },
   {
     check: ({ params }) => params.team_id === 1,
-    title: '奈少菈组队buff：基础伤害提升14%+14%，双草精通提升80,纺月提升120精通,少女Q增伤40%,菈乌玛Q伤害值提升4800，减抗25%,纺夜天境40%增伤',
+    title: '少菈奈砂组队buff：基础伤害提升14%+14%，双草精通提升80,纺月提升120精通,少女Q增伤40%,菈乌玛Q伤害值提升5000，减抗25%,纺夜天境40%增伤，砂糖提升精通50+140',
     data: {
-      mastery: 80 + 120,
+      mastery: 80 + 120 + 50 + 140,
       lunarBloom: 40 + 40,
       kx: 25,
       fypct: 14 + 14,
-      fyplus: 4800,
+      fyplus: 5000,
     }
   }
 ]
