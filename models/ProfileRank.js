@@ -133,6 +133,11 @@ export default class ProfileRank {
       8004: 8003,
       8006: 8005,
       8008: 8007,
+      8010: 8009,
+      8012: 8011,
+      8014: 8013,
+      8016: 8015,
+      8018: 8017,
     }
 
     /** @type {Array} */
@@ -394,7 +399,13 @@ export default class ProfileRank {
     let profileIdMap = {
       8002: 8001,
       8004: 8003,
-      8006: 8005
+      8006: 8005,
+      8008: 8007,
+      8010: 8009,
+      8012: 8011,
+      8014: 8013,
+      8016: 8015,
+      8018: 8017,
     }
     if (profileIdMap[profile.id]) { return `miao:rank:${this.groupId}:${type}:${profileIdMap[profile.id]}` }
     return `miao:rank:${this.groupId}:${type}:${profile.id}`
