@@ -212,7 +212,7 @@ let ArtisMark = {
     })
     let setData = artis.getSetData()
     artis.mark = totalMark
-    artis.markClass = ArtisMark.getMarkClass(totalMark / (profile.isGs ? 5 : 6))
+    artis.markClass = ArtisMark.getMarkClass(Math.round(totalMark) / (profile.isGs ? 5 : 6))
     let ret = {
       classTitle: charCfg.classTitle,
       artis: artisRet,

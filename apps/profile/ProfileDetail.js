@@ -248,6 +248,7 @@ let ProfileDetail = {
       data.treeData = treeData
     }
     data.weapon = profile.getWeaponDetail()
+    artisDetail.mark = Format.comma(artisDetail.mark, 0)
     let renderData = {
       save_id: uid,
       uid,
