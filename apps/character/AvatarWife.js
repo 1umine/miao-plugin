@@ -90,6 +90,7 @@ const Wife = {
 
     let avatarList = []
     let avatar = {}
+    /** 待设置角色列表 */
     let wifeList = []
 
     let mys = await MysApi.init(e)
@@ -151,8 +152,13 @@ const Wife = {
         if (lodash.intersection(['全部', '任意', '随机', '全都要'], wifeList).length > 0) {
           addRet = ['随机']
         } else {
+          let isLoli = false
+          // 转为本名
           wifeList = lodash.map(wifeList, (name) => {
             let char = Character.get(name)
+            if (char.checkWifeType(2)) { // loli type 2
+              isLoli = true
+            }
             if (char && (e.isMaster || char.checkWifeType(targetCfg.type))) {
               return char.name
             }
@@ -161,7 +167,11 @@ const Wife = {
           wifeList = lodash.filter(lodash.uniq(wifeList), (d) => !!d)
           addRet = wifeList
           if (addRet.length === 0) {
-            e.reply(`在可选的${targetCfg.keyword[0]}列表中未能找到 ${actionParam} ~`)
+            let reply = `在可选的${targetCfg.keyword[0]}列表中未能找到 ${actionParam} ~`
+            if (isLoli) {
+              reply = "直接电⚡⚡⚡"
+            }
+            e.reply(reply)
             return true
           }
         }
