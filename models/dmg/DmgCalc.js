@@ -222,12 +222,16 @@ let DmgCalc = {
 
       case 'lunarBloom':
       case 'lunarCharged':
-      case 'lunarCrystallize': {
+      case 'lunarCrystallize':
+      case 'stellarConduct': {
         let lunarBase = dmgBase ? dmgBase : eleBaseDmg[level]
         if (ele === 'lunarCharged') {
           eleNum = dmgBase ? 3 : eleNum
         } else if (ele === 'lunarCrystallize') {
           eleNum = dmgBase ? 1.6 : eleNum
+        } else if (ele === 'stellarConduct') {
+          // 星超导根据hit数的不同，有 1/1.45/1.9 三档倍率，这里暂时默认为最大值 1.9
+          eleNum = dmgBase ? 1.9 : eleNum
         } else {
           eleNum = 1
         }
