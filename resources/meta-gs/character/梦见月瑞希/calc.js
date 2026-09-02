@@ -7,7 +7,7 @@ export const details = [{
   dmg: ({ talent }, dmg) => dmg(talent.e['持续攻击伤害'], 'e')
 }, {
   title: '【辉映·星扩散】E额外持续星扩散伤害',
-  params: { cons_6: true },
+  params: { cons_6: true, cons_2: true },
   dmg: ({ attr, calc }, { basic }) => basic(calc(attr.mastery) * 1000 / 100, '', 'stellarSwirl')
 }, {
   title: 'E后Q点心伤害',
@@ -69,6 +69,13 @@ export const buffs = [{
     fyplus: ({ attr, calc }) => calc(attr.mastery) * 1100 / 100
   }
 }, {
+  check: ({ params }) => params.cons_6 === true && params.cons_2 === true,
+  title: '2命效果：水火冰雷风抗降低20%',
+  cons: 2,
+  data: {
+    kx: 20,
+  }
+}, {
   check: ({ params }) => params.cons_6 === true,
   title: '6命效果：星扩散反应伤害暴击率提升[cpct]%，暴击伤害提升[cdmg]%',
   cons: 6,
@@ -90,7 +97,7 @@ export const buffs = [{
     mastery: 100 + 100 * 0.1    // 因为下一个天赋【梦浮状态下时，元素精通提升10%】，所以这个天赋加的100精通后面，再追加 100 * 0.1
   }
 }, {
-  title: '瑞希天赋：梦见月处于梦浮状态下时，队伍中附近的角色的元素精通提升[mastery]%',
+  title: '瑞希天赋：梦见月处于梦浮状态下时，队伍中附近的角色的元素精通提升[masteryPct]%',
   data: {
     masteryPct: 10
   }
