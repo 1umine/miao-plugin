@@ -69,11 +69,10 @@ export const buffs = [{
     fyplus: ({ attr, calc }) => calc(attr.mastery) * 1100 / 100
   }
 }, {
-  check: ({ params }) => params.cons_6 === true && params.cons_2 === true,
-  title: '2命效果：水火冰雷风抗降低20%',
+  title: '2命效果：处于梦浮状态下时，风元素抗性降低[kx]%',
   cons: 2,
   data: {
-    kx: 20,
+    kx: 20
   }
 }, {
   check: ({ params }) => params.cons_6 === true,
