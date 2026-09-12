@@ -33,11 +33,16 @@ export async function uploadCharacterImg (e) {
   if (!regRet || !regRet[1]) {
     return false
   }
-  let char = Character.get(regRet[1])
-  if (!char || !char.name) {
+  const charNames = regRet[1].split(/[ ,，、]/).map(name => name.trim()).filter(name => name.length > 0)
+  if (charNames.length === 0) {
     return false
   }
-  let name = char.name
+  let chars = charNames.map(name => Character.get(name))
+  if (!chars || chars.length === 0) {
+    return false
+  }
+  let names = chars.map(char => char.name)
+
   for (let val of e.message) {
     if (val.type === 'image') {
       imageMessages.push(val)
@@ -84,7 +89,10 @@ export async function uploadCharacterImg (e) {
     e.reply('消息中未找到图片，请将要发送的图片与消息一同发送或引用要添加的图像..')
     return true
   }
-  await saveImages(e, name, imageMessages)
+  for (let name of names) {
+    await saveImages(e, name, imageMessages)
+    await new Promise(resolve => setTimeout(resolve, 1000)) // 延时1秒，防止被风控
+  }
   return true
 }
 
