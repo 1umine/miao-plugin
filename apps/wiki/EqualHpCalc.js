@@ -3,7 +3,7 @@
  */
 const EqualHpCalc = {
   async handle(e) {
-    const msg = e.original_msg || e.msg
+    const msg = (e.original_msg || e.msg || "").replace(/^#等效血量\s*/i, "")
     if (!msg) {
       await e.reply(
         "换算怪物血量到10抗, 用法:\n#等效血量 <怪物血量> <怪物抗性> [队伍减抗]",

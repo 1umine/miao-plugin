@@ -45,7 +45,7 @@ app.reg({
 
   // #等效血量
   equalhp: {
-    rule: /^#(等效血量).+$/,
+    rule: /^#(等效血量).*$/,
     fn: EqualHpCalc.handle
   }
 
