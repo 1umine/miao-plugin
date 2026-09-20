@@ -1,6 +1,21 @@
 /**
  * 等效血量计算器
  */
+
+/**
+ * 计算抗性对伤害的影响
+ * @param {number} kx 当前抗性值
+ */
+function dmgScale(kx) {
+  if (kx < 0) {
+    return 1 + kx / 200
+  } else if (kx < 75) {
+    return 1 - kx / 100
+  } else {
+    return 1 / ((4 * kx) / 100 + 1)
+  }
+}
+
 const EqualHpCalc = {
   async handle(e) {
     const msg = (e.original_msg || e.msg || "").replace(/^#等效血量\s*/i, "")
@@ -26,11 +41,11 @@ const EqualHpCalc = {
     }
 
     // 怪物等效血量
-    const scale = 0.9 / this.dmgScale(resistance)
+    const scale = 0.9 / dmgScale(resistance)
     const equalHp = hp * scale
     const equalDpsScale =
-      this.dmgScale(10 - teamResistance) /
-      this.dmgScale(resistance - teamResistance)
+      dmgScale(10 - teamResistance) /
+      dmgScale(resistance - teamResistance)
     const sendMsg = [
       `怪物血量: ${hp}\n`,
       `怪物抗性: ${resistance}%\n`,
@@ -46,20 +61,6 @@ const EqualHpCalc = {
       )}\n等效伤害倍率: ${equalDpsScale.toFixed(4)}`,
     )
     return true
-  },
-
-  /**
-   * 计算抗性对伤害的影响
-   * @param {number} kx 当前抗性值
-   */
-  dmgScale(kx) {
-    if (kx < 0) {
-      return 1 + kx / 200
-    } else if (kx < 75) {
-      return 1 - kx / 100
-    } else {
-      return 1 / ((4 * kx) / 100 + 1)
-    }
   },
 }
 
