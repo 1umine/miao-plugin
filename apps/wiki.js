@@ -4,6 +4,7 @@ import TodayMaterial from './wiki/TodayMaterial.js'
 import CharWiki from './wiki/CharWiki.js'
 import CalendarSr from './wiki/CalendarSr.js'
 import CalendarZZZ from './wiki/CalendarZZZ.js'
+import EqualHpCalc from './wiki/EqualHpCalc.js'
 
 let app = App.init({
   id: 'wiki',
@@ -40,7 +41,14 @@ app.reg({
   today: {
     rule: /^#(今日|今天|每日|我的|明天|明日|周([1-7]|一|二|三|四|五|六|日))*(素材|材料|天赋)[ |0-9]*$/,
     fn: TodayMaterial.render
+  },
+
+  // #等效血量
+  equalhp: {
+    rule: /^#(等效血量).+$/,
+    fn: EqualHpCalc.handle
   }
+
 })
 
 export default app
