@@ -8,7 +8,7 @@
  */
 function dmgScale(kx) {
   if (kx < 0) {
-    return 1 + kx / 200
+    return 1 - kx / 200
   } else if (kx < 75) {
     return 1 - kx / 100
   } else {
