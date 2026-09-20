@@ -47,19 +47,14 @@ const EqualHpCalc = {
       dmgScale(10 - teamResistance) /
       dmgScale(resistance - teamResistance)
     const sendMsg = [
-      `怪物血量: ${hp}\n`,
-      `怪物抗性: ${resistance}%\n`,
-      `队伍减抗: ${teamResistance}%\n\n`,
-      `等效血量(10抗): ${equalHp.toFixed(1)} (${scale.toFixed(2)}倍)\n\n`,
+      `怪物血量: ${hp}`,
+      `怪物抗性: ${resistance}%`,
+      `队伍减抗: ${teamResistance}%\n`,
+      `等效血量(10抗): ${equalHp.toFixed(1)} (${scale.toFixed(2)}倍)\n`,
       `如果要打这个怪相对于打10抗木桩DPS大约需要 ${equalDpsScale.toFixed(2)} 倍`,
     ]
 
-    await e.reply(
-      `怪物血量: ${hp}\n怪物抗性: ${resistance}%\n
-      队伍减抗: ${teamResistance}%\n\n等效血量(10抗): ${equalHp.toFixed(
-        2,
-      )}\n等效伤害倍率: ${equalDpsScale.toFixed(4)}`,
-    )
+    await e.reply(sendMsg.join("\n"))
     return true
   },
 }
