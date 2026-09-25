@@ -49,6 +49,11 @@ export const details = [
     dmg: QDmg,
   },
   {
+    title: "丝芙11爱00沃Q六段总伤",
+    params: { Havoc_Ruin: true, team5: true, Q: true },
+    dmg: QDmg,
+  },
+  {
     title: "【千岩勇者】丝芙1爱4莫普攻尾段",
     params: { Havoc_Ruin: true, team4: true, team3_extra: true, cons_2: true },
     dmg: ({ talent, attr }, dmg) => dmg(talent.e["五段伤害"], "a"),
@@ -204,6 +209,18 @@ export const buffs = [
       dmg: 100 + 12,
       atkPct: 20 + 32,
       kx: 55,
+    },
+  },
+  {
+    check: ({ params }) => params.team5 === true,
+    title:
+      "芙爱沃：2+0剧团芙，宗室1+1爱，千岩讨龙0沃，6.2w血",
+    data: {
+      dmg: 100,
+      atkPct: 20 + 20 + 32 + 48,
+      kx: 55 + 31.6,
+      qPlus: 22*140*6,
+      cdmg: 60,
     },
   },
 ]
