@@ -8,7 +8,6 @@ import lodash from 'lodash'
 import sizeOf from 'image-size'
 import { Data, Cfg } from '#miao'
 import { miaoPath } from '#miao.path'
-import { Cfg } from '#miao'
 
 const rPath = `${miaoPath}/resources`
 // 面板图（自定义立绘）支持的图片格式
