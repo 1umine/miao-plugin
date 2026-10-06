@@ -54,7 +54,7 @@ export const details = [
     dmg: QDmg,
   },
   {
-    title: "丝芙11爱10沃Q六段总伤",
+    title: "丝芙11爱20沃Q六段总伤",
     params: { Havoc_Ruin: true, team6: true, Q: true },
     dmg: QDmg,
   },
@@ -221,14 +221,14 @@ export const buffs = [
   {
     check: ({ params }) => params.team6 === true,
     title:
-      "芙爱沃：2+0剧团芙，宗室1+1爱，千岩讨龙1沃，6.2w血",
+      "芙爱沃：2+0剧团芙，宗室1+1爱，千岩讨龙2沃，6.5w血",
     data: {
       dmg: 100,
       atkPct: 20 + 20 + 32 + 48,
-      atkPlus: 496,
+      atkPlus: 520,
       kx: 55 + 31.6,
-      qPlus: 22 * 140 * 6,
-      cdmg: 60,
+      qPlus: 25 * 140 * 6,
+      cdmg: 60 + 50,
     },
   },
 ]
