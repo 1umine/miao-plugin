@@ -44,19 +44,49 @@ export const details = [
   },
   {
     title: "梦奥七沃e额外伤害",
-    params: { cons_6: true, cons_2: true, odette: true, vodyanitsa: true, qiqi: true },
+    params: {
+      cons_6: true,
+      cons_2: true,
+      odette: true,
+      qiqi: true,
+      vodyanitsa: true,
+    },
     dmg: ({ attr, calc }, { basic }) =>
       basic((calc(attr.mastery) * 1000) / 100, "", "stellarSwirl"),
   },
   {
     title: "梦奥七砂e额外伤害",
-    params: { cons_6: true, cons_2: true, odette: true, qiqi: true, sucrose: true },
+    params: {
+      cons_6: true,
+      cons_2: true,
+      odette: true,
+      qiqi: true,
+      sucrose: true,
+    },
     dmg: ({ attr, calc }, { basic }) =>
       basic((calc(attr.mastery) * 1000) / 100, "", "stellarSwirl"),
   },
   {
     title: "梦冰七沃e额外伤害",
-    params: { cons_6: true, cons_2: true, traveller: true, qiqi: true, vodyanitsa: true },
+    params: {
+      cons_6: true,
+      cons_2: true,
+      traveller: true,
+      qiqi: true,
+      vodyanitsa: true,
+    },
+    dmg: ({ attr, calc }, { basic }) =>
+      basic((calc(attr.mastery) * 1000) / 100, "", "stellarSwirl"),
+  },
+  {
+    title: "梦冰6七沃e额外伤害",
+    params: {
+      cons_6: true,
+      cons_2: true,
+      traveller: true,
+      qiqi6: true,
+      vodyanitsa: true,
+    },
     dmg: ({ attr, calc }, { basic }) =>
       basic((calc(attr.mastery) * 1000) / 100, "", "stellarSwirl"),
   },
@@ -200,6 +230,14 @@ export const buffs = [
     title: "七七e：星反应伤害提升[stellarSwirl]%; ",
     data: {
       stellarSwirl: 50,
+    },
+  },
+  {
+    check: ({ params }) => params.qiqi6 === true,
+    title: "满命七七：星反应伤害提升[stellarSwirl]%; 伤害值提升[fyplus]",
+    data: {
+      stellarSwirl: 50,
+      fyplus: 2400 * 6,
     },
   },
   {
