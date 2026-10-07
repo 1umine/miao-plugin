@@ -203,7 +203,7 @@ export const buffs = [
   {
     check: ({ params }) => params.odette === true,
     title:
-      "00奥黛塔：扩散反应基础伤害提升[swirl]%；炉火+4层华彩星反应伤害提升[stellarSwirl]%; ",
+      "00奥黛塔：反应基础伤害提升[fypct]%；炉火+4层华彩星反应伤害提升[stellarSwirl]%; ",
     data: {
       fypct: 14,
       stellarSwirl: 4 * 15 + 40,
