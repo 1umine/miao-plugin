@@ -465,6 +465,11 @@ body {
 .dmg-list .tr > div.dmg-title {
   justify-content: flex-start;
 }
+.dmg-list .tr > div.dmg-idx {
+  width: auto;
+  min-width: 0;
+  padding: 0;
+}
 .profile-mode .dmg-list .tr > div.dmg-title {
   justify-content: flex-end;
 }
