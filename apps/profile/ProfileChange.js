@@ -223,7 +223,11 @@ const ProfileChange = {
       source = {}
     }
 
-    let char = Character.get({ id: dc?.char || source.id || charid, elem: dc?.elem })
+    // 未替换角色或元素时沿用原面板元素，避免旅行者回退为默认风元素
+    let char = Character.get({
+      id: dc?.char || source.id || charid,
+      elem: dc?.elem || (!dc.char ? source.char?.elem : undefined)
+    })
     if (!char) {
       return false
     }
