@@ -39,6 +39,7 @@ export async function uploadCharacterImg (e) {
     return false
   }
   let chars = charNames.map(name => Character.get(name))
+    .filter(char => char && char.name)
   if (!chars || chars.length === 0) {
     return false
   }
