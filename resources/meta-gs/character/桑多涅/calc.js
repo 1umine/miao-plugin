@@ -27,6 +27,11 @@ export const details = [
     dmg: ({ attr, calc, talent }, { basic }) => basic(2 * calc(attr.atk) * talent.q['聚能光束星超导伤害'] / 100, '', 'stellarConduct')
   },
   {
+    title: '偶奥阿砂重击',
+    params: { Stellar: true, a2: true, odetta: true, alyosha: true, sucrose: true },
+    dmg: ({ attr, calc, talent }, { basic }) => basic(calc(attr.atk) * talent.a['重击冷凝射线星超导伤害'] / 100, '', 'stellarConduct')
+  },
+  {
     title: '4命额外星超导伤害',
     params: { Stellar: true },
     cons: 4,
@@ -40,7 +45,7 @@ export const details = [
   }
 ]
 
-export const defDmgIdx = 1
+export const defDmgIdx = 6
 export const mainAttr = 'atk,cpct,cdmg,mastery'
 
 export const buffs = [
@@ -86,7 +91,30 @@ export const buffs = [
     data: {
       elevated: 20
     }
+  },
+  {
+    check: ({ params }) => params.odetta === true,
+    title: '00炉火奥黛塔：星超导反应伤害提升[stellarConduct]%, 基础伤害提升[fypct]%',
+    data: {
+      stellarConduct: 60 + 50,
+      fypct: 14,
+    },
+  },
+  {
+    check: ({ params }) => params.alyosha === true,
+    title: '千岩阿罗夏：攻击力提升[atkPct]%',
+    data: {
+      atkPct: 20 + 21.2,
+    },
+  },
+  {
+    check: ({ params }) => params.sucrose === true,
+    title: '砂糖：元素精通提升[mastery]点，风套减抗[kx]%',
+    data: {
+      mastery: 190,
+      kx: 40,
+    },
   }
 ]
 
-export const createdBy = '冰翼'
+export const createdBy = '冰翼 & Lumine'
